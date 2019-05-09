@@ -15,4 +15,21 @@ git commit -a -m "Message" # to commit (take a snapshot) of the situation
 git log			   # to show the history of the directory
 git log myfile.txt	   # to show the history of a particular file
 
-git diff myfile.txt        # to show the differences between the last and the new version
+git diff HEAD~1 myfile.txt # to show the differences between the last and the new version
+git diff HEAD~2 myfile.txt
+
+				       # every commit has a code	
+git checkout <commit SHA1> myfile.txt  # to go back from master to a previous commit
+git checkout master myfile.txt	       # to go from the commit to the master commit
+
+git rm <oldfile>		# to remove a file
+gir mv <oldfile> <newfile>	# to rename a file
+
+# SETTING UP THE REMOTE
+git remote add origin http://IP/path/to/repository
+git remote add origin ssh://login@IP/path/to/repository
+
+git pull origin master   # to take files from the remote
+git push origin master   # to insert files in the remote
+
+
