@@ -1,0 +1,18 @@
+MAIN COMMANDS IN GITHUB
+
+# Setting up Github
+git config --global user.name "Michele Stofella"
+git config --global user.email "michele.stofella@studio.unibo.it"
+
+# Initialize Github
+# Go to the desired folder (or create it), then
+git init
+
+git status	           # to show the status of the followed files in the directory
+git add myfile.txt         # to add a file to the followed ones
+		           # note: the file should already exist in the directory
+git commit -a -m "Message" # to commit (take a snapshot) of the situation
+git log			   # to show the history of the directory
+git log myfile.txt	   # to show the history of a particular file
+
+git diff myfile.txt        # to show the differences between the last and the new version
