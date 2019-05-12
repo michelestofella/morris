@@ -24,7 +24,8 @@ def derivata_terza(f,y):
 def RK4 (f, y0, dt=0.01, Nstep=1000):
     y = np.zeros(Nstep); y[0]=y0
     for i in range(Nstep-1):
-        y[i+1] = y[i] + dt*f(y[i]) + 0.5*dt**2*derivata(f,y[i]) +\
+        y[i+1] = y[i] + dt*f(y[i]+0.5*dt*f(y[i])) +\
+                        dt**2/2*derivata(f,y[i]) +\
                         dt**3/6*derivata_seconda(f,y[i]) +\
                         dt**4/24*derivata_terza(f,y[i])
     return y
@@ -43,7 +44,7 @@ plt.plot(x,y)
 def exact_exp(x,y0):
     return y0*np.exp(-x)
 # We test it by changing the integration step delta_t
-delta_t = [0.01, 0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09, 0.1]
+delta_t = [0.1, 0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
 total_time = 5
 
 for dt in delta_t:
@@ -59,16 +60,14 @@ plt.legend()
 # approximated curves and the exact curve
 
 # Error between the dt=1.00 curve and the exact one
-x = np.linspace(0, total_time, round(total_time/delta_t[0]))
-y = RK4(f,y0,delta_t[0],round(total_time/delta_t[0]))
-exact_y = exact_exp(x,y0)
+# x = np.linspace(0, total_time, round(total_time/delta_t[0]))
+# y = RK4(f,y0,delta_t[0],round(total_time/delta_t[0]))
+# exact_y = exact_exp(x,y0)
 
-err = np.zeros(round(total_time/delta_t[0]))
-for i in range(0,round(total_time/delta_t[0])):
-    err[i] = np.abs(y[i]-exact_y[i])
-plt.scatter(x,err)
-    
-# %%
+# err = np.zeros(round(total_time/delta_t[0]))
+# for i in range(0,round(total_time/delta_t[0])):
+#     err[i] = np.abs(y[i]-exact_y[i])
+# plt.scatter(x,err)
 
 # I want a plot Error vs Deltat
 mean_err = np.zeros(len(delta_t))
@@ -77,11 +76,30 @@ for i in range(0,len(delta_t)):
     y = RK4(f,y0,delta_t[i],round(total_time/delta_t[i]))
     exact_y = exact_exp(x,y0)
     mean_err[i] = np.abs(y[round(total_time/delta_t[i])-1]-exact_y[round(total_time/delta_t[i])-1])
+
 plt.scatter(delta_t,mean_err, c='black')
-plt.xlim(0,0.1); plt.ylim(0,0.1)
+plt.xlim(0,1.0); plt.ylim(0,1.0)
 plt.xlabel("dt", fontsize=18); plt.ylabel("Mean Error", fontsize=18)
 
-xx = np.linspace(0,0.1,1000)
-plt.plot(xx, xx**1.2)    
+coef = np.polyfit(delta_t, mean_err, 2)
+poly = np.poly1d(coef)
+xx = np.linspace(0,1.0,1000)
+plt.plot(xx, poly(xx), 'r--') 
+   
+# %%
+# =============================================================================
+# SECOND VERIONS OF RUNGE-KUTTA ALGORITHM
+# =============================================================================
+
+# http://www2.hawaii.edu/~jmcfatri/math407/RungeKuttaTest.html
+
+
+
+
+
+
+
+
+
 
 # %%
