@@ -75,8 +75,10 @@ poly = np.poly1d(coef)
 xx = np.linspace(min(dt4),max(dt4))
 plt.scatter(dt4, error, c='black')
 plt.plot(xx, poly(xx), 'r--')
-plt.ylim(min(error),max(error))
-plt.xlabel('$\Delta$t$^4$', fontsize=15)
-plt.ylabel('Error', fontsize=15)
+plt.ylim(-0.5e-9,5e-9)
+plt.xlabel('$\Delta$t$^4$', fontsize=25)
+plt.ylabel('Error', fontsize=25)
+plt.tick_params(axis='both', labelsize=15)
+plt.grid(True)
 
 # %%
