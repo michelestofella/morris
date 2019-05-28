@@ -53,5 +53,4 @@ def test_two():
     t_ac, y_ac = RK4(f, dt, y0, t0, N_ab+N_bc)
     assert (y_ac[-1] < y_bc[-1]+tol) & (y_ac[-1] > y_bc[-1]-tol)
 
-
 # %%
