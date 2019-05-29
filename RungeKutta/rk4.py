@@ -27,7 +27,7 @@ def RK4(f, dt, y0, t0, Nstep):
 # we expect the final value to be equal to the initial one
 # within a tolerance tol
 def test_one():
-    tol = 1e-5
+    tol = 1e-6
     def f(t,y):
         return t*np.sqrt(y)
     dt = 0.1; y0 = 1.0; t0 = 0.0; Nstep = 100
@@ -43,7 +43,7 @@ def test_one():
 # we expect the final values to be equal
 # within a tolerance tol
 def test_two():
-    tol = 1e-5
+    tol = 1e-6
     def f(t,y):
         return t*np.sqrt(y)
     dt = 0.1; y0 = 1.0; t0 = 0.0
