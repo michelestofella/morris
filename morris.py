@@ -19,7 +19,7 @@ def RK4_system(f, dt, y0, t0, Nstep):
     y = np.zeros([Neq, Nstep+1]) 
     dy1 = np.zeros([Neq, Nstep+1]); dy2 = np.zeros([Neq, Nstep+1]); 
     dy3 = np.zeros([Neq, Nstep+1]); dy4 = np.zeros([Neq, Nstep+1])
-    for j in (0, Neq-1):
+    for j in range(0, Neq):
         y[j][0] = y0[j]
     
     for i in range(0,Nstep):
@@ -62,7 +62,7 @@ theta_ca = 18.0; theta_k = 13.
 I_app = 80.
 
 """ Integration Parameters """
-f = [f1,f2]; dt = 0.1; t0 = 0.0; Nstep = 1000
+f = [f1,f2]; dt = 0.01; t0 = 0.0; Nstep = 5000
 y0 = [-25.0,0.0]
 
 """ Application of the algorithm """
@@ -71,7 +71,7 @@ time, y = RK4_system(f, dt, y0, t0, Nstep)
 # %%
 
 """ Data visualization """
-f, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.5,4))
+f, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15,5))
 """ Membrane voltage vs Time """
 ax1.plot(time, y[0])
 """ Potassium gating variable vs Time """
