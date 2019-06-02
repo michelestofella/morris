@@ -7,7 +7,9 @@
 #   dy1/dt = f1(t,y1,...,yn)
 #   ...
 #   dyn/dt = fn(t,y1,...,yn)
-#
+# 
+# Three tests of the algorithm are implemented here
+# To test the algorithm: !pytest rk4_system.py
 # =============================================================================
 
 import numpy as np
@@ -24,7 +26,7 @@ def RK4_system(f, dt, y0, t0, Nstep):
     y = np.zeros([Neq, Nstep+1]) 
     dy1 = np.zeros([Neq, Nstep+1]); dy2 = np.zeros([Neq, Nstep+1]); 
     dy3 = np.zeros([Neq, Nstep+1]); dy4 = np.zeros([Neq, Nstep+1])
-    for j in (0, Neq-1):
+    for j in range(0, Neq):
         y[j][0] = y0[j]
     
     for i in range(0,Nstep):
@@ -38,6 +40,10 @@ def RK4_system(f, dt, y0, t0, Nstep):
             y[j][i+1] = y[j][i]+(dy1[j][i]+2*dy2[j][i]+2*dy3[j][i]+dy4[j][i])/6
     return t, y
 
+# %%
+    
+""" The first two tests deal with a system of 2 ODEs """   
+ 
 # TEST ONE
 # We apply the algorithm to a specific system of functions
 # we move forward and backward within the same number of steps
@@ -79,3 +85,31 @@ def test_two():
            (np.abs(y_ac[1][-1]-y_bc[1][-1])<tol)   
     
 # %%  
+           
+""" The following tests deal with a system of 3 ODEs """
+
+# TEST THREE
+# Test three is analogous to TEST ONE but applied to a system of 3 ODEs
+# The algorithm is applied forward and backword
+# We expect the final values to be equal to the initial ones
+# within a certain tolerance tol
+def test_three():
+    tol = 1e-6
+    def fun1(t,x,y,z):
+        return -x+3*z
+    def fun2(t,x,y,z):
+        return -y+2*z
+    def fun3(t,x,y,z):
+        return x**2-2*z
+    f = [fun1, fun2, fun3]
+    dt = 1e-6; y0 = [0.0, .5, 3.0]; t0 = 0.0; Nstep = 1000
+
+    t_for, y_for = RK4_system(f=f, dt=dt, y0=y0, t0=t0, Nstep=Nstep)
+    y_last = [y_for[0][-1], y_for[1][-1], y_for[2][-1]]
+    t_back,y_back= RK4_system(f=f,dt=-dt,y0=y_last,t0=t0+dt*Nstep,Nstep=Nstep)
+    assert (np.abs(y_back[0][-1]-y0[0])<tol) &\
+           (np.abs(y_back[1][-1]-y0[1])<tol) &\
+           (np.abs(y_back[2][-1]-y0[2])<tol)
+
+
+# %%
