@@ -13,26 +13,24 @@ import numpy as np
 import matplotlib.pyplot as plt    
 
 """ Runge-Kutta algorithm """
-def RK4_system2(f, dt, y0, t0, Nstep):
+def RK4_system(f, dt, y0, t0, Nstep):
+    Neq = len(f)
     t = np.zeros(Nstep+1); t[0] = t0
-    y1 = np.zeros(Nstep+1); y1[0] = y0[0]
-    y2 = np.zeros(Nstep+1); y2[0] = y0[1]
-    f = [f1,f2]; fun1 = f[0]; fun2 = f[1]
-
+    y = np.zeros([Neq, Nstep+1]) 
+    dy1 = np.zeros([Neq, Nstep+1]); dy2 = np.zeros([Neq, Nstep+1]); 
+    dy3 = np.zeros([Neq, Nstep+1]); dy4 = np.zeros([Neq, Nstep+1])
+    for j in (0, Neq-1):
+        y[j][0] = y0[j]
+    
     for i in range(0,Nstep):
-        dy1 = [dt*fun1(t,y1,y2), 
-               dt*fun2(t,y1,y2)]
-        dy2 = [dt*fun1(t+0.5*dt, y1+0.5*dy1[0], y2+0.5*dy1[1]),
-               dt*fun2(t+0.5*dt, y1+0.5*dy1[0], y2+0.5*dy1[1])]
-        dy3 = [dt*fun1(t+0.5*dt, y1+0.5*dy2[0], y2+0.5*dy2[1]),
-               dt*fun2(t+0.5*dt, y1+0.5*dy2[0], y2+0.5*dy2[1])]    
-        dy4 = [dt*fun1(t+dt, y1+dy3[0], y2+dy3[1]),
-               dt*fun2(t+dt, y1+dy3[0], y2+dy3[1])]    
-
-        t[i+1] = t[i] + dt
-        y1[i+1] = y1[i]+(dy1[0][i]+2*dy2[0][i]+2*dy3[0][i]+dy4[0][i])/6
-        y2[i+1] = y2[i]+(dy1[1][i]+2*dy2[1][i]+2*dy3[1][i]+dy4[1][i])/6
-    y = [y1, y2]
+        for j in range(0,Neq):
+            dy1[j] = dt*f[j](t,*y)
+            dy2[j] = dt*f[j](t,*y)
+            dy3[j] = dt*f[j](t,*y)
+            dy4[j] = dt*f[j](t,*y)
+        
+            t[i+1] = t[i] + dt
+            y[j][i+1] = y[j][i]+(dy1[j][i]+2*dy2[j][i]+2*dy3[j][i]+dy4[j][i])/6
     return t, y
 
 # %%
@@ -68,7 +66,7 @@ f = [f1,f2]; dt = 0.1; t0 = 0.0; Nstep = 1000
 y0 = [-25.0,0.0]
 
 """ Application of the algorithm """
-time, y = RK4_system2(f, dt, y0, t0, Nstep)
+time, y = RK4_system(f, dt, y0, t0, Nstep)
 
 # %%
 
