@@ -16,12 +16,15 @@ In particular, you should find the following files
 ### rk4.py
 
 The program **rk4.py** contains the implementation of the 4th order Runge-Kutta algorithm to solve one differential equation (source: <https://rosettacode.org/wiki/Runge-Kutta_method>).
-The algorithm aims to solve differential equations written as
-> dy/dt = f(t,y)
+The algorithm aims to solve differential equations written as dy/dt = f(t,y).
   
-To call the algorithm:
-
-`t, y = RK4 (f, dt, y0, t0, Nstep)`
+To call the algorithm, you should follow the following example:
+  ```
+  import numpy as np
+  def f(t,y):
+    return t*np.sqrt(y)
+  t, y = RK4(f, dt=0.01, y0=1.0, t0=0.0, Nstep=1000)
+  ```
 
 **Parameters:**
 * **f(t,y)**: is a function that may depend both on y and t;
