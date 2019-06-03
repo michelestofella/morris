@@ -10,7 +10,7 @@ The folder contains all the codes about the implementation of the 4th order Rung
 
 In particular, you should find the following files
 * **rk4.py**: it contains the Runge-Kutta algorithm to solve one differential equation;
-* **rk4_error.py**: it contains the analysis of the global truncation error introduced by the algorithm;
+* **error_rk4.py**: it contains the analysis of the global truncation error introduced by the algorithm;
 * **rk4_system.py**: it contains the Runge-Kutta algorithm to solve a set of two differential equations.
 
 ### rk4.py
@@ -57,6 +57,26 @@ The test checks if the final point of the algorithm applied A -> B and B -> C is
 
 **Note on the tests**: the two tests correctly work because an appropriate integration step dt has been set. See the file **rk4_error.py** for further details on the dependance of the error of the algorithm with respect to the integration step.
 
-### rk4_error.py
+### error_rk4.py
+
+The program **error_rk4.py** contains the analysis of the error of the algorithm implemented in **rk4.py**. As known from literature (see for example <https://en.wikipedia.org/wiki/Runge–Kutta_methods>), the global truncation error (or total accumulated error) should go as the 4th power ot the integration step: error ~ O(dt<sup>4</sup>).
+
+The first part of the program contains the algorithm implemented in **rk4.py** (see the previous paragraph for further information about the algorithm). 
+
+The second part introduces a test differential equation, deriving from the passive cell membrane model. The model and the parameters come from INGALLS P., *Mathematical Modeling in Systems Biology. An Introduction*, MIT Press (2013).
+A first plot shows the difference between the numerical and the analitical solution with the following parameters:
+
+  ```
+  g = 0.0144; C = 0.98; E = -93.6; 
+  dt = 0.1; v0 = -60.0; t0 = 0.0; Nstep = 5000
+  ```
+The plot is shown here:
+
+*insert image*
+
+The last part of the file contains the **error analysis** of the algorithm: the Runge Kutta algorithm is applied to the passive cell membrane model several times and the only parameter that is changing is the time step **dt**. We set a parameter **total_time** so that every simulation reach the same point. At the final step, the global truncation error is calculated. 
+We registed the time step **dt** and the **global truncation error** and we show the results in a plot, where we also fit the error with a linear model: error ~ O(dt<sup>4</sup>). The results are shown above.
+
+*insert image*
 
 ### rk4_system.py
