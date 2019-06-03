@@ -75,10 +75,10 @@ The plot is shown here:
 ![](Images/passive_membrane.png)
 
 The last part of the file contains the **error analysis** of the algorithm: the Runge Kutta algorithm is applied to the passive cell membrane model several times and the only parameter that is changing is the time step **dt**. We set a parameter **total_time** so that every simulation reach the same point. At the final step, the global truncation error is calculated. 
-We registed the time step **dt** and the **global truncation error** and we show the results in a plot, where we also fit the error with a linear model: error ~ O(dt<sup>4</sup>). The results are shown above.
+We registed the time step **dt** and the **global truncation error** and we show the results in a plot, where we also fit the error with a linear model (using the function np.polyfit): error ~ O(dt<sup>4</sup>). The results are shown above.
 
 ![](Images/rungekutta_error.png)
 
-The linear behaviour in the plot shows a correct behaviour of the algorithm.
+The linear behaviour in the plot shows the correct behaviour of the algorithm.
 
 ### rk4_system.py
