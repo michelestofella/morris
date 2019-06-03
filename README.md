@@ -37,10 +37,12 @@ To call the algorithm, you should follow the following example:
 * **t**: it is a float64 array of size *Nstep*
 * **y**: it is a float64 array of size *Nstep* that represents the solution of the differential equation
   
-The program **rk4.py** also contains two tests:
+The program **rk4.py** also contains two tests: to test the algorithm you should write the following command line in the python console, taking care you are in the same directory in which the file is stored:
+  ```
+  !pytest rk4.py
+  ```
 
 The **first test** applies the algorithm forward and backward in time (in both cases the algorithm is repeated *Nstep* times) to a test function 
-  
   ```
   import numpy as np
   f(t,y) = t*np.sqrt(y)
