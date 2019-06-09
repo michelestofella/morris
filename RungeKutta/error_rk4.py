@@ -18,13 +18,15 @@ import matplotlib.pyplot as plt
 
 """ Runge-Kutta algorithm """
 def RK4(f, dt, y0, t0, Nstep):
-    y = np.zeros(Nstep+1); t = np.zeros(Nstep+1)
+    y = np.zeros(Nstep+1); t = np.zeros(Nstep+1);
+    dy1 = np.zeros(Nstep+1); dy2 = np.zeros(Nstep+1)
+    dy3 = np.zeros(Nstep+1); dy4 = np.zeros(Nstep+1)
     t[0] = t0; y[0] = y0
     for i in range(0,Nstep):
-        dy1 = dt*f(t, y)
-        dy2 = dt*f(t+0.5*dt, y+0.5*dy1)
-        dy3 = dt*f(t+0.5*dt, y+0.5*dy2)
-        dy4 = dt*f(t+dt,     y+dy3)
+        dy1[i] = dt*f(t[i], y[i])
+        dy2[i] = dt*f(t[i]+0.5*dt, y[i]+0.5*dy1[i])
+        dy3[i] = dt*f(t[i]+0.5*dt, y[i]+0.5*dy2[i])
+        dy4[i] = dt*f(t[i]+dt,     y[i]+dy3[i])
         
         y[i+1] = y[i] + (dy1[i] + 2*dy2[i] + 2*dy3[i] + dy4[i])/6
         t[i+1] = t[i] + dt
