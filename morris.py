@@ -25,9 +25,9 @@ def RK4_system(f, dt, y0, t0, Nstep):
     for i in range(0,Nstep):
         for j in range(0,Neq):
             dy1[j] = dt*f[j](t,*y)
-            dy2[j] = dt*f[j](t,*y)
-            dy3[j] = dt*f[j](t,*y)
-            dy4[j] = dt*f[j](t,*y)
+            dy2[j] = dt*f[j](t+0.5*dt,*y+0.5*dy1)
+            dy3[j] = dt*f[j](t+0.5*dt,*y+0.5*dy2)
+            dy4[j] = dt*f[j](t+dt,*y+dy3)
         
             t[i+1] = t[i] + dt
             y[j][i+1] = y[j][i]+(dy1[j][i]+2*dy2[j][i]+2*dy3[j][i]+dy4[j][i])/6
