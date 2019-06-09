@@ -18,11 +18,13 @@ In particular, you should find the following files
 The program **rk4.py** contains the implementation of the 4th order Runge-Kutta algorithm to solve one differential equation (source: <https://rosettacode.org/wiki/Runge-Kutta_method>).
 The algorithm aims to solve differential equations written as dy/dt = f(t,y).
   
-To call the algorithm, you should follow the following example:
+To call the algorithm, you can follow the following example:
   ```
   import numpy as np
+  # define the function you want to integrate, as in the example
   def f(t,y):
     return t*np.sqrt(y)
+  # apply the algorithm in the following way
   t, y = RK4(f, dt=0.01, y0=1.0, t0=0.0, Nstep=1000)
   ```
 
@@ -37,7 +39,7 @@ To call the algorithm, you should follow the following example:
 * **t**: it is a float64 array of size *Nstep*
 * **y**: it is a float64 array of size *Nstep* that represents the solution of the differential equation
   
-The program **rk4.py** also contains two tests: to test the algorithm you should write the following command line in the python console, taking care you are in the same directory in which the file is stored:
+The program **rk4.py** also contains three tests: to test the algorithm you should write the following command line in the python console, taking care you are in the same directory in which the file is stored:
   ```
   !pytest rk4.py
   ```
@@ -57,7 +59,9 @@ The **second test** applies the algorith three times: the first time the algorit
   
 The test checks if the final point of the algorithm applied A -> B and B -> C is equal to the algorithm applied directly A -> C within a certain tolerance on precision governed by the parameter tol (set at tol=1e-6).  
 
-**Note on the tests**: the two tests correctly work because an appropriate integration step dt has been set. See the file **rk4_error.py** for further details on the dependance of the error of the algorithm with respect to the integration step.
+The **third test** applies the algorithm to a null function, thus we expect the initial value to be constant in time. The test checks that the final value is equal to the initial one.
+
+**Note on the tests**: the first and the second test correctly work because an appropriate integration step dt has been set, that depends on the function one has to integrate. See the file **rk4_error.py** for further details on the dependance of the error of the algorithm with respect to the integration step.
 
 ### error_rk4.py
 
@@ -84,3 +88,36 @@ We registed the time step **dt** and the **global truncation error** and we show
 The linear behaviour in the plot shows the correct behaviour of the algorithm.
 
 ### rk4_system.py
+
+The program **rk4_system.py** contains the 4th order Runge-Kutta algortihm applied to a set of ODEs. Suppose we have a set of differential equations written in the following way:
+
+> dy1/dt = f1(y1,...,yn,t) 
+>
+> ...
+>
+> dyn/dt = fn(y1,...,yn,t) 
+
+To call the algorithm, you can follow the following example:
+  ```
+  import numpy as np
+  # define the system of functions you want to integrate
+  def f1(t,y1,y2):
+    return np.sin(t)+np.cos(y1)+np.sin(y2)
+  def f2(t,y1,y2):
+    return np.cos(t)+np.sin(y2)
+  # apply the algorithm setting all the parameters
+  t, y = RK4_system(f=[f1,f2], dt=0.01, y0=[1.0,-1.0], t0=0.0, Nstep=1000)
+  ```
+
+**Parameters:**
+* **f**: is list of the functions that must be integrated (they may depend both on y and t);
+* **dt**: is the integration time step;
+* **y0**: is the list of initial conditions;
+* **t0**: is the initial time;
+* **Nstep**: is the number of steps for which the algorithm must be repeated
+
+**Return Value:**
+* **t**: it is a float64 array of size *Nstep*
+* **y**: it is a bidimensional float64 array of size *Nstep x N_eq* that represents the solution of the system of ODEs, where *N_eq* is the number of ODEs contained in the system, i.e. the length of the list of function f.
+
+The program **rk4_system.py** also contain five tests that we briefly discuss here.
