@@ -80,3 +80,34 @@ ax2.plot(time, y[1])
 ax3.plot(y[0], y[1])
 
 # %%
+
+""" (I_stim,v_ca)-plane """
+I_app = 80.
+v_ca  = 0.
+
+""" Integration Parameters """
+f = [f1,f2]; dt = 0.01; t0 = 0.0; Nstep = 5000
+y0 = [-25.0,0.0]
+
+""" Algorithm """
+time, y = RK4_system(f,dt,y0,t0,Nstep)
+
+""" Data Visualization """
+plt.plot(I_app,v_ca)
+
+# %%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
