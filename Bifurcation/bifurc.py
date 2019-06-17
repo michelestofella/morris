@@ -46,7 +46,7 @@ def Df(x):
 """ We determine equilibrium points (stable and unstable) 
     for different values of the parameter r """    
 stable_points = []; unstable_points = []
-r_values = np.linspace(0.5,5,100)
+r_values = np.linspace(0.1,5,100)
 for r in r_values:
     zeros = find_zeros(f, Df, xmin=-5, xmax=5, eps=1e-12)
     for i in range(0,len(zeros)):
@@ -60,10 +60,10 @@ df_stable = pd.DataFrame(stable_points,columns=col)
 df_unstable = pd.DataFrame(unstable_points,columns=col)
 df = pd.concat([df_stable,df_unstable])
 """ Data Visualization """
-plt.scatter(df_stable['par'],df_stable['eq_point'],s=15,
-            color='red',label='stable')
-plt.scatter(df_unstable['par'],df_unstable['eq_point'], s=15,
-            color='blue',label='unstable')
+plt.plot(df_stable['par'],df_stable['eq_point'],
+            color='black',label='stable')
+plt.plot(df_unstable['par'],df_unstable['eq_point'],
+            '--',color='black',label='unstable')
 plt.xlabel('Parameter r',fontsize=15)
 plt.ylabel('Equilibrium Point $x^*$',fontsize=15)
 plt.legend()
@@ -94,10 +94,10 @@ df_stable = pd.DataFrame(stable_points,columns=col)
 df_unstable = pd.DataFrame(unstable_points,columns=col)
 df = pd.concat([df_stable,df_unstable])
 """ Data Visualization """
-plt.scatter(df_stable['par'],df_stable['eq_point'],s=15,
-            color='red',label='stable')
-plt.scatter(df_unstable['par'],df_unstable['eq_point'], s=15,
-            color='blue',label='unstable')
+plt.plot(df_stable['par'],df_stable['eq_point'],
+            color='black',label='stable')
+plt.plot(df_unstable['par'],df_unstable['eq_point'],
+            '--',color='black',label='unstable')
 plt.xlabel('Parameter r',fontsize=15)
 plt.ylabel('Equilibrium Point $x^*$',fontsize=15)
 plt.legend()
@@ -127,9 +127,9 @@ df_stable = pd.DataFrame(stable_points,columns=col)
 df_unstable = pd.DataFrame(unstable_points,columns=col)
 df = pd.concat([df_stable,df_unstable])
 """ Data Visualization """
-plt.scatter(df_stable['par'],df_stable['eq_point'],s=15,
+plt.scatter(df_stable['par'],df_stable['eq_point'],s=5,
             color='red',label='stable')
-plt.scatter(df_unstable['par'],df_unstable['eq_point'], s=15,
+plt.scatter(df_unstable['par'],df_unstable['eq_point'], s=5,
             color='blue',label='unstable')
 plt.xlabel('Parameter r',fontsize=15)
 plt.ylabel('Equilibrium Point $x^*$',fontsize=15)
