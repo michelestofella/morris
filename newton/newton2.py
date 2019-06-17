@@ -30,7 +30,6 @@ def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
 def test_one():
     tol = 1e-6
     p0 = [0.1, 0.7]
-
     def f1(x,y):
         return 1 - 4*x + 2*x**2 - 2*y**3
     def f2(x,y):
