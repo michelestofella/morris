@@ -62,52 +62,27 @@ theta_ca = 18.0; theta_k = 13.
 I_app = 80.
 
 """ Integration Parameters """
-f = [f1,f2]; dt = 0.01; t0 = 0.0; Nstep = 5000
+f = [f1,f2]; dt = 0.01; t0 = 0.0; Nstep = 20000
 y0 = [-25.0,0.0]
 
 """ Application of the algorithm """
-time, y = RK4_system(f, dt, y0, t0, Nstep)
+time, sol = RK4_system(f, dt, y0, t0, Nstep)
 
 # %%
 
-""" Data visualization """
-f, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15,5))
-""" Membrane voltage vs Time """
-ax1.plot(time, y[0])
-""" Potassium gating variable vs Time """
-ax2.plot(time, y[1])
-""" Potassium gating variable w vs Membrane Voltage V """
-ax3.plot(y[0], y[1])
+""" Replica of Figure 3b """
+delta = 0.025
+x = np.arange(-100.0, 50.0, delta)
+y = np.arange(0.0, .4, delta)
+X, Y = np.meshgrid(x, y)
+Z1 = (g_ca*(0.5*(1+np.tanh((X-v_ca)/theta_ca)))*(E_ca-X) + g_k*Y*(E_k-X) +\
+     g_leak*(E_leak-X) + I_app)/c
+Z2 = phi_w*((0.5*(1+np.tanh((X-v_k)/theta_k))-Y)/(1/(np.cosh((X-v_k)/(2*theta_k)))))
+
+fig, (ax1, ax2) = plt.subplots(1,2,figsize=(15,5))
+ax1.plot(sol[0],sol[1], color='blue')
+ax1.contour(X, Y, Z1, 0, colors='black', linestyles='--', label='V nullcline')
+ax1.contour(X, Y, Z2, 0, colors='red', linestyles='--', label='w nullcline')
+ax2.plot(time, sol[0])
 
 # %%
-
-""" (I_stim,v_ca)-plane """
-I_app = 80.
-v_ca  = 0.
-
-""" Integration Parameters """
-f = [f1,f2]; dt = 0.01; t0 = 0.0; Nstep = 5000
-y0 = [-25.0,0.0]
-
-""" Algorithm """
-time, y = RK4_system(f,dt,y0,t0,Nstep)
-
-""" Data Visualization """
-plt.plot(I_app,v_ca)
-
-# %%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
