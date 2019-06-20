@@ -57,13 +57,13 @@ E_ca = 50.0;    E_k = -100.; E_leak = -70.
 phi_w = 0.15
 c = 2.
 
-v_ca  = 0.;   v_k = -10.
+v_ca  = 0.0;   v_k = -10.
 theta_ca = 18.0; theta_k = 13.
-I_app = 80.
+I_app = 80.0
 
 """ Integration Parameters """
-f = [f1,f2]; dt = 0.01; t0 = 0.0; Nstep = 20000
-y0 = [-25.0,0.0]
+f = [f1,f2]; dt = 0.01; t0 = 0.0; Nstep = 5000
+y0 = [-25.0,0.]
 
 """ Application of the algorithm """
 time, sol = RK4_system(f, dt, y0, t0, Nstep)
