@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt  
 from numpy.linalg import inv
+import pandas as pd
   
 """ Fixed Model Parameters """
 g_ca = 20.0;     g_k = 20.;   g_leak = 2.
@@ -96,17 +97,14 @@ def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
     
         dist = np.sqrt(np.dot(pk-p0,pk-p0))
         if dist < eps:
-            # print('Number of iterations: ',k)
-            # print('Solution: ',pk)
             return pk
         p0 = pk
-    # print('Maximum number of iterations reached: ',max_iter)
     return False
 
 # %%
 
-I_app_values = np.linspace(0,100,50)    
-v0_values = np.linspace(-80,40,50)
+I_app_values = np.linspace(0,100,100)    
+v0_values = np.linspace(-80,40,100)
 w0 = 0.
 
 zero_v = []; zero_w = [];
@@ -116,14 +114,15 @@ for I_app in I_app_values:
         p0 = [v0,w0]
         point = newton2(f,Jf,p0)
         if point is not False:
-            zero_v.append(round(point[0],5))
-            zero_w.append(round(point[1],5))
+            zero_v.append(round(point[0],6))
+            zero_w.append(round(point[1],6))
         for element in zero_v:
             if element not in zeros_v:
                 zeros_v.append(element)
         for element in zero_w:
             if element not in zeros_w:
                 zeros_w.append(element)
+print('Several Errors may be shown: do not worry about them, they are errors encountered by the Newton algorithm that return no values.')
 
 stable = []; unstable = []
 for i in range(0,len(I_app_values)):
@@ -143,22 +142,27 @@ y0 = [-25.0,0.]
 
 max_v = []; min_v = []
 for I_app in I_app_values:
-    if I_app > 60:
+    if I_app > unstable[0][0]:
         time, sol = RK4_system(g, dt, y0, t0, Nstep)
         max_v.append([I_app,max(sol[0])])
         min_v.append([I_app,min(sol[0])])
         
 # %%            
  
-for i in range(0,len(stable)):
-    plt.scatter(stable[i][0],stable[i][1],color='red')
-for j in range(0,len(unstable)):
-    plt.scatter(unstable[j][0],unstable[j][1],color='black')
-for k in range(0,len(max_v)):
-    plt.scatter(max_v[k][0],max_v[k][1],color='red')
-for kk in range(0,len(min_v)):
-    plt.scatter(min_v[kk][0],min_v[kk][1],color='red')
+col_st = ['I_app','V','w','Stability']
+stab = pd.DataFrame(stable,columns=col_st)
+unstab = pd.DataFrame(unstable, columns=col_st)
 
-plt.vlines(x=60,ymin=min_v[0][1],ymax=max_v[0][1],linestyles='--')
+col=['I_app','V']
+vmax = pd.DataFrame(max_v,columns=col)
+vmin = pd.DataFrame(min_v,columns=col)
+
+plt.plot(stab['I_app'],stab['V'])
+plt.plot(unstab['I_app'],unstab['V'])
+plt.plot(vmax['I_app'],vmax['V'],'b-',label='$V_{max}$')
+plt.plot(vmin['I_app'],vmin['V'],'b-',label='$V_{min}$')
+plt.xlabel('$I_{app}$',fontsize=18); plt.ylabel('V',fontsize=18)
+plt.vlines(x=unstable[0][0],ymin=min_v[0][1],ymax=max_v[0][1],linestyles=':',color='b')
+plt.grid(linestyle=':')
 
 # %%

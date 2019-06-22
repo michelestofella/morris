@@ -6,7 +6,9 @@
 #
 # =============================================================================
 
-def newton(f, Df, x0, eps=1e-16, max_n=20):
+import numpy as np    
+
+def newton(f, Df, x0, eps=1e-16, max_n=50):
     xn = x0
     for n in range(0,max_n):
         f_xn = f(xn)
@@ -40,5 +42,13 @@ def test_two():
     r = 3
     assert newton(f,Df,x0=2.0) == 3
 
+def test_three():
+    tol = 1e-6
+    def h(x):
+        return x**2
+    def Dh(x):
+        return 2*x
+    x0 = 3.
+    assert np.abs(newton(h,Dh,x0))<tol
+
 # %%
-    
