@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt  
 from numpy.linalg import inv
 import pandas as pd
-  
+from scipy.signal import find_peaks
+
 """ Fixed Model Parameters """
 g_ca = 20.0;     g_k = 20.;   g_leak = 2.
 E_ca = 50.0;    E_k = -100.; E_leak = -70.
@@ -103,10 +104,12 @@ def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
 
 # %%
 
+""" Set I_app values and v0_values to draw bifurcation diagram """
 I_app_values = np.linspace(0,100,201)    
 v0_values = np.linspace(-80,40,61)
 w0 = 0.0
 
+""" Find the zeros of the function """
 v_zeros = []; w_zeros = []
 for I_app in I_app_values:
     zero_v = []; zero_w = []
@@ -129,6 +132,7 @@ print('they are errors encountered by the Newton algorithm that returns no value
 
 # %%
 
+""" Discriminate stability of each zero found previously """
 stable = []; unstable = []
 for i in range(0,len(I_app_values)):
     I_app = I_app_values[i]
@@ -143,8 +147,9 @@ for i in range(0,len(I_app_values)):
             
 # %%
 
-from scipy.signal import find_peaks
-
+""" Integrate the model at different values of I_app 
+    to find maximum and minimum values of the limit cycle
+    and to find the frequency of the generated action potential """
 g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 20000
 y0 = [-25.0,0.0]
 
@@ -166,6 +171,7 @@ print("Done: 100.0 %")
                 
 # %%            
  
+""" Reorganize data """
 col_st = ['I_app','V','w','Stability']
 stab = pd.DataFrame(stable,columns=col_st)
 unstab = pd.DataFrame(unstable, columns=col_st)
@@ -177,6 +183,9 @@ col=['I_app','V']
 vmax = pd.DataFrame(max_v,columns=col)
 vmin = pd.DataFrame(min_v,columns=col)
 
+# %%
+
+""" Bifurcation Diagram """
 plt.plot(stab['I_app'],stab['V'],'b')
 #plt.plot(unstab['I_app'],unstab['V'],'b--')
 plt.plot(unstab_up['I_app'],unstab_up['V'],'b--')
@@ -191,6 +200,7 @@ plt.grid(linestyle=':')
 
 # %%
 
+""" Integrate the model for two different situations """
 g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 5000
 
 y0_1 = [-25.0,0.0]
