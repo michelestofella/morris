@@ -12,6 +12,7 @@ Project for 'Models and Numerical Methods for Applied Physics'.
 * **RungeKutta** contains the implementation and the tests of the 4th order Runge Kutta algorithm.
 * **newton** contains the implementation and the tests of the Newton algorithm.
 * **README.md** contains a description of the whole repository.
+* **paper.pdf** contains the final paper in pdf format.
 
 ### Bifurcation
 
