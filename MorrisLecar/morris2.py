@@ -1,9 +1,15 @@
 """ Import Libraries """
 import numpy as np
 import matplotlib.pyplot as plt  
-from numpy.linalg import inv
 import pandas as pd
 from scipy.signal import find_peaks
+
+""" Import algorithms """
+import sys
+sys.path.insert(0, '../newton')
+from newton2 import newton2
+sys.path.insert(0, '../rungekutta')
+from rk4_system import RK4_system
 
 """ Fixed Model Parameters """
 g_ca = 20.0;     g_k = 20.;   g_leak = 2.
@@ -66,43 +72,6 @@ def Jf(x,y):
             [df2dx(x,y),df2dy(x,y)]]
 
 # %%
-    
-""" Runge Kutta Algorithm """
-def RK4_system(f, dt, y0, t0, Nstep):
-    Neq = len(f)
-    t = np.zeros(Nstep+1); t[0] = t0
-    y = np.zeros([Neq, Nstep+1]) 
-    dy1 = np.zeros([Neq, Nstep+1]); dy2 = np.zeros([Neq, Nstep+1]); 
-    dy3 = np.zeros([Neq, Nstep+1]); dy4 = np.zeros([Neq, Nstep+1])
-    for j in range(0, Neq):
-        y[j][0] = y0[j]
-    
-    for i in range(0,Nstep):
-        for j in range(0,Neq):
-            dy1[j] = dt*f[j](t,*y)
-            dy2[j] = dt*f[j](t+0.5*dt,*y+0.5*dy1)
-            dy3[j] = dt*f[j](t+0.5*dt,*y+0.5*dy2)
-            dy4[j] = dt*f[j](t+dt,*y+dy3)
-        
-            t[i+1] = t[i] + dt
-            y[j][i+1] = y[j][i]+(dy1[j][i]+2*dy2[j][i]+2*dy3[j][i]+dy4[j][i])/6
-    return t, y
-
-""" Newton Algorithm """    
-def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
-    for k in range(0,max_iter):
-        f_k = f(p0[0],p0[1])
-        Jf_k = Jf(p0[0],p0[1])
-        invJf_k = inv(Jf_k)
-        pk = p0 - np.dot(invJf_k,f_k)
-    
-        dist = np.sqrt(np.dot(pk-p0,pk-p0))
-        if dist < eps:
-            return pk
-        p0 = pk
-    return False
-
-# %%
 
 """ Set I_app values and v0_values to draw bifurcation diagram """
 I_app_values = np.linspace(0,100,201)    
@@ -150,7 +119,7 @@ for i in range(0,len(I_app_values)):
 """ Integrate the model at different values of I_app 
     to find maximum and minimum values of the limit cycle
     and to find the frequency of the generated action potential """
-g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 20000
+g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 1000
 y0 = [-25.0,0.0]
 
 max_v = []; min_v = []; freq = []
