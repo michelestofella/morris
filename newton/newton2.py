@@ -54,6 +54,7 @@ def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
             # print('Number of iterations: ',k)
             return pk
         p0 = pk
-    print('Maximum number of iterations reached: ',max_iter)
+    # print('Maximum number of iterations reached: ',max_iter)
+    return False
     
 # %%
