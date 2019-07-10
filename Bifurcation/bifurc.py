@@ -8,20 +8,9 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import pandas as pd   
 
-""" Newton Algorithm: to find a solution to the equation f(x)=0 """
-def newton(f, Df, x0, eps, max_n=50):
-    xn = x0
-    for n in range(0,max_n):
-        f_xn = f(xn)
-        if abs(f_xn) < eps:
-            return xn
-        Df_xn = Df(xn)
-        if Df_xn == 0:
-            print('Zero derivative')
-            return None
-        xn = xn - f_xn/Df_xn
-    print('Maximum number of iterations reached')
-    return None
+import sys
+sys.path.insert(0, '../newton')
+from newton import newton
 
 """ Newton algorithm applied to a set of initial points: from xmin to xmax """
 def find_zeros(f, Df, xmin, xmax, eps, max_n=50):
@@ -36,13 +25,12 @@ def find_zeros(f, Df, xmin, xmax, eps, max_n=50):
 
 # %%
 
-""" Monodimensional Case 
-1) Saddle Node Bifurcation: 
-   dx/dt = phi(x,r) = -r+x**2 """
+""" Saddle Node Bifurcation: dx/dt = phi(x,r) = -r+x**2 """
 def f(x):
     return -r+x**2
 def Df(x):
     return 2*x
+        
 """ We determine equilibrium points (stable and unstable) 
     for different values of the parameter r """    
 stable_points = []; unstable_points = []
@@ -54,11 +42,13 @@ for r in r_values:
             stable_points.append([r,zeros[i],'stable'])
         if Df(zeros[i])>0:
             unstable_points.append([r,zeros[i],'unstable'])  
+
 """ Data organization in a dataframe """
 col = ['par','eq_point','stability']
 df_stable = pd.DataFrame(stable_points,columns=col)
 df_unstable = pd.DataFrame(unstable_points,columns=col)
 df = pd.concat([df_stable,df_unstable])
+
 """ Data Visualization """
 plt.plot(df_stable['par'],df_stable['eq_point'],
             color='black',label='stable')
@@ -70,13 +60,12 @@ plt.legend()
  
 # %%
 
-""" Monodimensional Case
-2) Transcritic Bifurcation
-    dx/dt = phi(x,r) = r*x-x**2 """
+""" Transcritic Bifurcation: dx/dt = phi(x,r) = r*x-x**2 """
 def f(x):
     return r*x-x**2
 def Df(x):
     return r-2*x
+
 """ We determine equilibrium points (stable and unstable) 
     for different values of the parameter r """    
 stable_points = []; unstable_points = []
@@ -88,11 +77,13 @@ for r in r_values:
             stable_points.append([r,zeros[i],'stable'])
         if Df(zeros[i])>0:
             unstable_points.append([r,zeros[i],'unstable'])  
+
 """ Data organization in a dataframe """
 col = ['par','eq_point','stability']
 df_stable = pd.DataFrame(stable_points,columns=col)
 df_unstable = pd.DataFrame(unstable_points,columns=col)
 df = pd.concat([df_stable,df_unstable])
+
 """ Data Visualization """
 plt.plot(df_stable['par'],df_stable['eq_point'],
             color='black',label='stable')
@@ -104,13 +95,12 @@ plt.legend()
 
 # %%
 
-""" Monodimensional Case
-3) Fork Bifurcation
-    dx/dt = phi(x,r) = r*x-x**3 """
+""" Fork Bifurcation: dx/dt = phi(x,r) = r*x-x**3 """
 def f(x):
     return r*x-x**3
 def Df(x):
     return r-3*x**2
+
 """ Determine equilibrium points for different parameters """
 stable_points = []; unstable_points = []
 r_values = np.linspace(-5,5,100)
@@ -121,11 +111,13 @@ for r in r_values:
             stable_points.append([r,zeros[i],'stable'])
         if Df(zeros[i])>0:
             unstable_points.append([r,zeros[i],'unstable'])
+
 """ Organization of the results in a dataframe """    
 col = ['par','eq_point','stability']
 df_stable = pd.DataFrame(stable_points,columns=col)
 df_unstable = pd.DataFrame(unstable_points,columns=col)
 df = pd.concat([df_stable,df_unstable])
+
 """ Data Visualization """
 plt.scatter(df_stable['par'],df_stable['eq_point'],s=5,
             color='red',label='stable')
