@@ -36,7 +36,7 @@ def newton(f, Df, x0, eps=1e-16, max_n=50):
     for n in range(0,max_n):
         f_xn = f(xn)
         if abs(f_xn) < eps:
-            print('Number of iterations to find the solution: ',n)
+            # print('Number of iterations to find the solution: ',n)
             return xn
         Df_xn = Df(xn)
         if Df_xn == 0:

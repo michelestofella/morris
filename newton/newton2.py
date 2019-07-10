@@ -51,7 +51,7 @@ def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
     
         dist = np.sqrt(np.dot(pk-p0,pk-p0))
         if dist < eps:
-            print('Number of iterations: ',k)
+            # print('Number of iterations: ',k)
             return pk
         p0 = pk
     print('Maximum number of iterations reached: ',max_iter)
