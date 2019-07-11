@@ -1,8 +1,15 @@
+# =============================================================================
+# 
+# SCRIPT FOR BIFURCATION ANALYSIS OF THE MORRIS LECAR MODEL
+# Bifurcation analysis is performed
+# Bifurcation diagram is generated
+# 
+# =============================================================================
+
 """ Import Libraries """
 import numpy as np
 import matplotlib.pyplot as plt  
 import pandas as pd
-from scipy.signal import find_peaks
 
 """ Import algorithms """
 import sys
@@ -17,12 +24,13 @@ E_ca = 50.0;    E_k = -100.; E_leak = -70.
 phi_w = 0.15
 c = 2.
 
-v_ca  = -12.0;   v_k = -10.
-theta_ca = 18.0; theta_k = 13.
+v_ca  = 0.0  # this is the parameter to change for neurons' classification
+v_k = -10.; theta_ca = 18.0; theta_k = 13.
 
 # %%
 
-""" Model for the Runge Kutta Integration """
+""" Model for the Runge Kutta Integration 
+Here we need to insert the temporal dependency """
 def g1(t,y1,y2):
     part1 = g_ca*m_inf(y1)*(E_ca-y1)
     part2 = g_k*y2*(E_k-y1)
@@ -40,7 +48,8 @@ def tau_w(v):
 
 # %%
 
-""" Model for Bifurcation Analysis """
+""" Model for Bifurcation Analysis 
+Here we need to remove the temporal dependency """
 def f1(x,y):
     part1 = -g_ca*m_inf(x)*(x-E_ca)
     part2 = -g_k*y*(x-E_k)
@@ -117,26 +126,19 @@ for i in range(0,len(I_app_values)):
 # %%
 
 """ Integrate the model at different values of I_app 
-    to find maximum and minimum values of the limit cycle
-    and to find the frequency of the generated action potential """
+    to find maximum and minimum values of the limit cycle """
 g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 1000
 y0 = [-25.0,0.0]
 
 max_v = []; min_v = []; freq = []
 for j in range(0,len(I_app_values)):
-    I_app = I_app_values[j]
     print("Calculating:",round(j*100/len(I_app_values),1),"%")
+    I_app = I_app_values[j]
     time, sol = RK4_system(g, dt, y0, t0, Nstep)
-    peaks, _ = find_peaks(sol[0], height=0)
-    peaks = peaks*dt/1000
-    period = []
-    for i in range(1,len(peaks)):
-        period.append(peaks[i]-peaks[i-1])
-    freq.append(1/np.mean(period))
     if I_app > stable[-1][0]:
         max_v.append([I_app,max(sol[0])])
         min_v.append([I_app,min(sol[0])])
-print("Done: 100.0 %")
+print('Done: 100.0 %')
                 
 # %%            
  
@@ -165,49 +167,6 @@ plt.vlines(x=stable[-1][0],ymin=min_v[0][1],ymax=max_v[0][1],linestyles=':',colo
 plt.text(90,-65,'$V_{min}$'); plt.text(90,20,'$V_{max}$')
 plt.ylim(-90.,40.)
 plt.xlabel('$I_{app}$',fontsize=18); plt.ylabel('V',fontsize=18)
-plt.grid(linestyle=':')
-
-# %%
-
-""" Integrate the model for two different situations """
-g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 5000
-
-y0_1 = [-25.0,0.0]
-y0_2 = [-10.0,-0.0]
-I_app = 14.
-time, sol = RK4_system(g, dt, y0_1, t0, Nstep)
-time2,sol2 = RK4_system(g, dt, y0_2, t0, Nstep)
-
-# %%
-
-""" Plot of signal and phase space """
-delta = 0.025
-x = np.arange(-100.0, 50.0, delta)
-y = np.arange(-0.1, .4, delta)
-X, Y = np.meshgrid(x, y)
-Z1 = (g_ca*(0.5*(1+np.tanh((X-v_ca)/theta_ca)))*(E_ca-X) + g_k*Y*(E_k-X) +\
-     g_leak*(E_leak-X) + I_app)/c
-Z2 = phi_w*((0.5*(1+np.tanh((X-v_k)/theta_k))-Y)/(1/(np.cosh((X-v_k)/(2*theta_k)))))
-
-fig, (ax1, ax2) = plt.subplots(1,2,figsize=(15,6))
-ax1.plot(sol[0],sol[1], color='blue')
-ax1.plot(sol2[0],sol2[1], color='red')
-ax1.contour(X, Y, Z1, 0, colors='black', linestyles='--', linewidths=1)
-ax1.contour(X, Y, Z2, 0, colors='black', linestyles='--', linewidths=2)
-ax1.set_xlabel('V',fontsize=18); ax1.set_ylabel('w',fontsize=18)
-ax1.set_ylim([-0.1,0.4])
-ax2.plot(time, sol[0], 'b')
-ax2.plot(time2,sol2[0],'r')
-ax2.set_xlabel('Time', fontsize=18); ax2.set_ylabel('Voltage',fontsize=18)
-ax1.grid(linestyle=':'); ax2.grid(linestyle=':')
-
-# %%
-
-""" Plot of frequencies vs I_app """
-plt.plot(I_app_values,freq)
-plt.xlim(0,100); plt.ylim(0,160)
-plt.xlabel('$I_{app}$', fontsize=18)
-plt.ylabel('Frequency [Hz]', fontsize=18)
 plt.grid(linestyle=':')
 
 # %%
