@@ -14,6 +14,8 @@ Project for 'Models and Numerical Methods in Physics'.
 * **README.md** contains a description of the whole repository.
 * **paper.pdf** contains the final paper in pdf format.
 
+**Note**: every folder where some scripts have been implemented contains a *README* file with detailed documentation.
+
 ### Bifurcation
 
 * **bifurc.py** contains some simple examples of bifurcation analysis.
