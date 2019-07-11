@@ -2,7 +2,7 @@
 
 Analysis of bifurcations in the Morris Lecar model for the classification of neurons' excitability.
 
-Project for 'Models and Numerical Methods for Applied Physics'.
+Project for 'Models and Numerical Methods in Physics'.
 
 ## Structure of the repository
 
@@ -14,6 +14,8 @@ Project for 'Models and Numerical Methods for Applied Physics'.
 * **README.md** contains a description of the whole repository.
 * **paper.pdf** contains the final paper in pdf format.
 
+**NOTE**: every folder containing algorithms or scripts contains a README file with the documentation of the implementation.
+
 ### Bifurcation
 
 * **bifurc.py** contains some simple examples of bifurcation analysis.
@@ -21,7 +23,9 @@ Project for 'Models and Numerical Methods for Applied Physics'.
 ### MorrisLecar
 
 * **morris.py** contains the numerical integration of the Morris Lecar model.
-* **morris2.py** contains the script to perform bifurcation analysis, to built the frequency plot and to integrate the model to draw the images of the paper.
+* **morris2.py** contains the script to perform bifurcation analysis.
+* **morris3.py** contains the script to built the frequency plot
+* **morris_setup.py** contains the parameters of the model
 
 ### RungeKutta
 
