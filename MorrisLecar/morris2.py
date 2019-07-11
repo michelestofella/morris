@@ -6,28 +6,7 @@
 # 
 # =============================================================================
 
-""" Import Libraries """
-import numpy as np
-import matplotlib.pyplot as plt  
-import pandas as pd
-
-""" Import algorithms """
-import sys
-sys.path.insert(0, '../newton')
-from newton2 import newton2
-sys.path.insert(0, '../rungekutta')
-from rk4_system import RK4_system
-
-""" Fixed Model Parameters """
-g_ca = 20.0;     g_k = 20.;   g_leak = 2.
-E_ca = 50.0;    E_k = -100.; E_leak = -70.
-phi_w = 0.15
-c = 2.
-
-v_ca  = 0.0  # this is the parameter to change for neurons' classification
-v_k = -10.; theta_ca = 18.0; theta_k = 13.
-
-# %%
+from morris_setup import *
 
 """ Model for the Runge Kutta Integration 
 Here we need to insert the temporal dependency """
@@ -45,8 +24,6 @@ def w_inf(v):
     return 0.5*(1+np.tanh((v-v_k)/theta_k))
 def tau_w(v):
     return 1/(np.cosh((v-v_k)/(2*theta_k)))
-
-# %%
 
 """ Model for Bifurcation Analysis 
 Here we need to remove the temporal dependency """
@@ -127,7 +104,7 @@ for i in range(0,len(I_app_values)):
 
 """ Integrate the model at different values of I_app 
     to find maximum and minimum values of the limit cycle """
-g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 1000
+g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 200
 y0 = [-25.0,0.0]
 
 max_v = []; min_v = []; freq = []
