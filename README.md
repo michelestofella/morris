@@ -14,8 +14,6 @@ Project for 'Models and Numerical Methods in Physics'.
 * **README.md** contains a description of the whole repository.
 * **paper.pdf** contains the final paper in pdf format.
 
-**NOTE**: every folder containing algorithms or scripts contains a README file with the documentation of the implementation.
-
 ### Bifurcation
 
 * **bifurc.py** contains some simple examples of bifurcation analysis.
@@ -29,10 +27,16 @@ Project for 'Models and Numerical Methods in Physics'.
 
 ### RungeKutta
 
-* **rk4.py** contains the Runge-Kutta algorithm to solve one differential equation and its tests.
+* **rk4.py** contains the Runge-Kutta algorithm to solve one differential equation.
+* **rk4_test.py** contains the test of the Runge-Kutta algorithm implemented in rk4.py.
 * **error_rk4.py** contains the analysis of the global truncation error introduced by the algorithm.
 * **rk4_system.py** contains the Runge-Kutta algorithm to solve a set of two differential equations and its tests.
+* **rk4_system_test.py** contains the test of the Runge-Kutta algorithm implemented in rk4_system.py.
+
 
 ### newton 
 * **newton.py** contains the one-dimensionale Newton algorithm and its tests.
+* **newton_test.py** contains the test of the Newton algorithm implemented in newton.py
 * **newton2.py** contains the two-dimensional Newton algorithm and its tests. 
+* **newton2_test.py** contains the test of the Newton algorithm implemented in newton2.py
+
