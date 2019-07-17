@@ -31,4 +31,30 @@ def test_two():
     assert num_sol[0] == 0.
     assert num_sol[1] == 0.
 
+def test_three():
+    x0 = (3,0)
+    def f1(x,y):
+        return 0
+    def f2(x,y):
+        return 0
+    def f(x,y):
+        return [f1(x,y),f2(x,y)]
+    def Jf(x,y):
+        return [[0,0],
+                [0,0]]
+    assert newton2(f,Jf,x0) == False
+    
+def test_four():
+    p0 = [7.0, 1.0]
+    def f1(x,y):
+        return x**2+y**2+1
+    def f2(x,y):
+        return 2*x
+    def f(x,y):
+        return [f1(x,y),f2(x,y)]
+    def Jf(x,y):
+        return [[2*x,2*y],
+                [2,0]]
+    assert newton2(f,Jf,p0,max_iter=50) == False
+   
 # %%
