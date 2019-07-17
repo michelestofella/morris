@@ -60,7 +60,7 @@ def Jf(x,y):
 # %%
 
 """ Set I_app values and v0_values to draw bifurcation diagram """
-I_app_values = np.linspace(0,100,201)    
+I_app_values = np.linspace(0,100,200)    
 v0_values = np.linspace(-80,40,61)
 w0 = 0.0
 
@@ -69,9 +69,11 @@ v_zeros = []; w_zeros = []
 for I_app in I_app_values:
     zero_v = []; zero_w = []
     zeros_v = []; zeros_w = []
+    
     for v0 in v0_values:
         p0 = [v0,w0]
         point = newton2(f,Jf,p0)
+    
         if point is not False:
             zero_v.append(round(point[0],5))
             zero_w.append(round(point[1],5))
@@ -82,8 +84,6 @@ for I_app in I_app_values:
             if element not in zeros_w:
                 zeros_w.append(element)
     v_zeros.append(zeros_v); w_zeros.append(zeros_w)
-print('Several Errors may be shown: do not worry about them,')
-print('they are errors encountered by the Newton algorithm that returns no values.')
 
 # %%
 
@@ -104,7 +104,7 @@ for i in range(0,len(I_app_values)):
 
 """ Integrate the model at different values of I_app 
     to find maximum and minimum values of the limit cycle """
-g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 200
+g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 1000
 y0 = [-25.0,0.0]
 
 max_v = []; min_v = []; freq = []

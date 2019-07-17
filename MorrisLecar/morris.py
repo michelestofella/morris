@@ -32,7 +32,8 @@ g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 5000
 
 y0_1 = [-25.0,0.0]
 y0_2 = [-10.0,-0.0]
-I_app = 14.0
+
+I_app = 80.
 
 time, sol = RK4_system(g, dt, y0_1, t0, Nstep)
 time2,sol2 = RK4_system(g, dt, y0_2, t0, Nstep)

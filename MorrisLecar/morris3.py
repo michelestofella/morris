@@ -29,11 +29,11 @@ def tau_w(v):
 # %%
 
 """ Set I_app values and v0_values to draw bifurcation diagram """
-I_app_values = np.linspace(0,100,51)    
+I_app_values = np.linspace(0,100,101)    
 
 """ Integrate the model at different values of I_app 
     to find the frequency of the generated action potential """
-g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 1000
+g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 5000
 y0 = [-25.0,0.0]
 
 max_v = []; min_v = []; freq = []
