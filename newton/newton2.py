@@ -9,6 +9,7 @@
 
 import numpy as np
 from numpy.linalg import inv
+from numpy.linalg import det
 
 def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
     """ Bidimensional Newton algorithm: finds the solutions of the system of equations
@@ -46,6 +47,10 @@ def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
     for k in range(0,max_iter):
         f_k = f(p0[0],p0[1])
         Jf_k = Jf(p0[0],p0[1])
+        if det(Jf_k) == 0:
+            print('Singular matrix, determinant = 0')
+            return False
+
         invJf_k = inv(Jf_k)
         pk = p0 - np.dot(invJf_k,f_k)
     
