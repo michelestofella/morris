@@ -59,7 +59,7 @@ As output, the function returns:
 
 Notice that if the maximum number of iterations is reached, the function prints `Maximum number of iterations reached`.
 
-Some errors should be printed if the jacobian matrix is singular in the initial guess point or in some iterated values.
+If the Jacobian matrix is singular in the initial guess point or in some iterated values, the function prints `Singular matrix: determinant 0`.
 
 ### newton2_test.py
 
