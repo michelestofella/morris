@@ -6,7 +6,6 @@ Project for 'Models and Numerical Methods in Physics'.
 
 ## Structure of the repository
 
-* **Bifurcation** contains some simple examples of bifurcation analysis.
 * **Images** contains the images of the article. 
 * **MorrisLecar** contains the scripts for the final analysis of the Morris Lecar model.
 * **RungeKutta** contains the implementation and the tests of the 4th order Runge Kutta algorithm.
@@ -15,10 +14,6 @@ Project for 'Models and Numerical Methods in Physics'.
 * **paper.pdf** contains the final paper in pdf format.
 
 **Note**: every folder where some scripts have been implemented contains a *README* file with detailed documentation.
-
-### Bifurcation
-
-* **bifurc.py** contains some simple examples of bifurcation analysis.
 
 ### MorrisLecar
 
