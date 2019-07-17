@@ -41,11 +41,6 @@ I_app_values = np.linspace(0,100,201)
 v0_values = np.linspace(-80,40,61)
 ```
 Now we can start bifurcation analysis: for each value of `I_app`, we find all the zeros of the model by exploiting several initial guess values and applying the bidimensional Newton algorithm. 
-As described in `morris\newton\README.md`, the bidimensional Newton algorithm may arise some error in the case in which the Jacobian matrix is singular. As reminder, the script prints the following lines: 
-```
-Several Errors may be shown: do not worry about them,
-they are errors encountered by the Newton algorithm that returns no values.
-```
 All the zeros found are appended to two lists `v_zeros` and `w_zeros`.
 
 In the next block, stability is discriminated. We calculate the eigenvalues of the Jacobian matrix for each zero found previously. If all the eigenvalues are negative, than the point is stable, otherwise it is unstable. 
