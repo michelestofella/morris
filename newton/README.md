@@ -34,6 +34,12 @@ The file **newton_test.py** contains the tests of the one-dimensional Newton alg
 
 `!pytest newton_test.py`
 
+We here give a description of the tests performed.
+
+* `test_one` applies the algorithm to the function `f(x)=x**2-4` with initial guesses `x0=3.0` and `x0=-1.5`; the test checks if the algorithm correctly finds as solution the zeros `x=2.0` and `x=-2.0`.
+* `test_two` applies the algorithm to the function `f(x)=rx-x**2` for `r=3` and checks if the algorithm correctly finds, starting from `x0=2.0`, the zero `x=3`.
+* `test_three` applies the algorithm to the function `f(x)=sin(x)` and checks if the algortihm, starting from initial guess `x0=0.5`, finds the zero `x=0`.
+
 ## newton2.py
 
 The file **newton2_test.py** contains the two-dimensional Newton algorithm. Thus the algorithm solves the following system:
@@ -66,3 +72,10 @@ If the Jacobian matrix is singular in the initial guess point or in some iterate
 The file **newton2_test.py** contains the tests of the bidimensional Newton algorithm implemented in **newton2.py**. To perform the test, go to the newton folder and digit the following instruction in the iPython console:
 
 `!pytest newton2_test.py`
+
+We give here a description of the tests performed.
+
+* `test_one` applies the algorithm to the set of functions `f1(x,y)=1-4*x+2*x**2-2*y**3` and `f2(x,y)=-4+x**4+4*y+4*y**4` for which an analitical solution is known: with 6 decimals: `(0.06177,0.724491)`. The test checks if the algorithm finds the analitical solution (within 6 decimals).
+* `test_two` applies the algorithm to the system composed by `f1(x,y)=x` and `f2(x,y)=y` and checks if the algorithm finds `(0,0)` as solution.
+* `test_three` applies the algorithm to the system composed by `f1(x,y)=f2(x,y)=0` that should return a singular matrix. The test checks if the algorithm returns a `False` boolean value as it should do. 
+* `test_four` applies the algorithm to the system `f1(x,y)=x**2+y**2+1` and `f2(x,y)=2*x` that should have no zeros, thus the algorithm should reach the maximum number of iterations. The test checks if the function returns a `False` boolean variable as it should do in this case.
