@@ -29,6 +29,10 @@ The file **rk4_test.py** contains the tests of the 4th order Runge Kutta algorit
 
 `!pytest rk4_test.py`
 
+We here give a description of each test. The file contains only one test. Further testing of the algorithm is available in the **rk4_error.py** file where error analysis is performed. 
+
+* `test_one` applies the algorithm to the differential equation `dy/dt=0` and checks if the last element of the returned solution is equal to the initial value: `assert y[-1]==y0`
+
 ## rk4_system.py
 
 The file **rk4_system.py** contains the 4th order Runge Kutta algorithm to solve a set of differential equations written in the form
@@ -54,11 +58,20 @@ As output, the function returns:
 * t: an array containing the time instants at which the solution has been calculated
 * y: a multidimensional array (size Nstep times the number of equations in the system) containing the solution of the system
 
-### rk4_system.py
+### rk4_system_test.py
 
 The file **rk4_system_test.py** contains the tests of the 4th order Runge Kutta algorithm implemented in **rk4_system.py**. To perform the test, you should go to the folder RungeKutta and digit the following command line in the iPython console:
 
 `!pytest rk4_system_test.py`
+
+We give here a description of the tests performed.
+
+* `test_1` applies the algorithm to the differential equation `dy/dt=0` and checks if the last element of the solution is equal to the initial value: `assert y[0][-1]==y0[0]`.
+* `test_2` applies the algorithm to the differential equation `dy/dt=1` and checks if the last element of the t array and the solution array is equal: `assert y[0][-1]==t[-1]`.
+* `test_3` applies the algorithm to the system of two differential equation `dy1/dt=0` and `dy2/dt=1` and checks if the last element of the solution of the first differential equation is equal to the initial value `y[0][-1]=y0[0]` and if the final value of the solution of the second differential equation is equal to the final value of the time array `y[1][-1]==t[-1]`.
+* `test_4` applies the algorithm to the system of two differential equations `dy1/dt=-y1` and `dy2/dt=-y2` and checks if the last element of the two solutions is equal: `assert y[0][-1]==y[1][-1]`.
+* `test_5` tests the reversibility of the algorithm in the linear case `dy/dt=-2`. The algortihm is applied forward for `Nstep=1000`; then the last value is set as initial condition for the backward algortihm (i.e. the algorithm applied with inverse time step `dt=-dt`). The test checks if the last value is equal to the initial condition. 
+
 
 ## rk4_error.py
 
