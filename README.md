@@ -27,13 +27,13 @@ Project for 'Models and Numerical Methods in Physics'.
 * **rk4.py** contains the Runge-Kutta algorithm to solve one differential equation.
 * **rk4_test.py** contains the test of the Runge-Kutta algorithm implemented in rk4.py.
 * **error_rk4.py** contains the analysis of the global truncation error introduced by the algorithm.
-* **rk4_system.py** contains the Runge-Kutta algorithm to solve a set of two differential equations and its tests.
+* **rk4_system.py** contains the Runge-Kutta algorithm to solve a set of two differential equations.
 * **rk4_system_test.py** contains the test of the Runge-Kutta algorithm implemented in rk4_system.py.
 
 
 ### newton 
-* **newton.py** contains the one-dimensionale Newton algorithm and its tests.
-* **newton_test.py** contains the test of the Newton algorithm implemented in newton.py
-* **newton2.py** contains the two-dimensional Newton algorithm and its tests. 
-* **newton2_test.py** contains the test of the Newton algorithm implemented in newton2.py
+* **newton.py** contains the one-dimensionale Newton algorithm.
+* **newton_test.py** contains the tests of the Newton algorithm implemented in newton.py
+* **newton2.py** contains the two-dimensional Newton algorithm. 
+* **newton2_test.py** contains the tests of the Newton algorithm implemented in newton2.py
 
