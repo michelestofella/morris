@@ -67,6 +67,8 @@ Notice that if the maximum number of iterations is reached, the function prints 
 
 If the Jacobian matrix is singular in the initial guess point or in some iterated values, the function prints `Singular matrix: determinant 0`.
 
+If one of the previous errors arise (maximum number of interations reached or singular matrix), then the output of the algorithm is a False boolean variable.
+
 ### newton2_test.py
 
 The file **newton2_test.py** contains the tests of the bidimensional Newton algorithm implemented in **newton2.py**. To perform the test, go to the newton folder and digit the following instruction in the iPython console:
