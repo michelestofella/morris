@@ -4,7 +4,9 @@ Analysis of bifurcations in the Morris Lecar model for the classification of neu
 
 Project for 'Models and Numerical Methods in Physics'.
 
-Language: **python**
+Language: **python**.
+
+IDE: **spyder**
 
 ## Structure of the repository
 
