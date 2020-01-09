@@ -51,7 +51,7 @@ For a theoretical description of the two-dimensional Newton algortihm, see [math
 
 To call the algorithm, digit the following line:
 
-`pk = def newton2(f,Jf,p0,eps=1e-8,max_iter=20)`
+`pk = newton2(f,Jf,p0,eps=1e-8,max_iter=20)`
 
 The input parameters needed for the function are:
 * f: the list of two functions that form the system `f=[f1,f2]`;
