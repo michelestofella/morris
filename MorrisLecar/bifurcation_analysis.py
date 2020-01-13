@@ -6,7 +6,47 @@
 # 
 # =============================================================================
 
-from morris_setup import *
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--v_ca")
+parser.add_argument("--dt")
+parser.add_argument("--Nstep")
+parser.add_argument("--v0")
+parser.add_argument("--w0")
+
+parser.add_argument("--Imin")
+parser.add_argument("--Imax")
+parser.add_argument("--v0min")
+parser.add_argument("--v0max")
+
+config = {}
+opts = parser.parse_args()
+
+if opts.v_ca:
+    v_ca = float(opts.v_ca)
+if opts.dt:
+    dt = float(opts.dt)
+if opts.Nstep:
+    Nstep = int(opts.Nstep)
+if opts.v0:
+    v0 = float(opts.v0)
+if opts.w0:
+    w0 = float(opts.w0)
+
+if opts.Imin:
+    Imin = float(opts.Imin)
+if opts.Imax:
+    Imax = float(opts.Imax)
+if opts.v0min:
+    v0min = float(opts.v0min)
+if opts.v0max:
+    v0max = float(opts.v0max)
+
+# %%
+
+from fixed_parameters import *
 
 """ Model for the Runge Kutta Integration 
 Here we need to insert the temporal dependency """
@@ -60,10 +100,11 @@ def Jf(x,y):
 # %%
 
 """ Set I_app values and v0_values to draw bifurcation diagram """
-I_app_values = np.linspace(0,100,200)    
-v0_values = np.linspace(-80,40,61)
+I_app_values = np.linspace(Imin,Imax,200)    
+v0_values = np.linspace(v0min,v0max,61)
 w0 = 0.0
 
+count_warn = 0
 """ Find the zeros of the function """
 v_zeros = []; w_zeros = []
 for I_app in I_app_values:
@@ -72,17 +113,20 @@ for I_app in I_app_values:
     
     for v0 in v0_values:
         p0 = [v0,w0]
-        point = newton2(f,Jf,p0)
-    
-        if point is not False:
+        try:
+            point = newton2(f,Jf,p0)
             zero_v.append(round(point[0],5))
             zero_w.append(round(point[1],5))
-        for element in zero_v:
-            if element not in zeros_v:
-                zeros_v.append(element)
-        for element in zero_w:
-            if element not in zeros_w:
-                zeros_w.append(element)
+            for element in zero_v:
+                if element not in zeros_v:
+                    zeros_v.append(element)
+            for element in zero_w:
+                if element not in zeros_w:
+                    zeros_w.append(element)
+
+        except:
+            count_warn += 1
+    
     v_zeros.append(zeros_v); w_zeros.append(zeros_w)
 
 # %%
@@ -104,19 +148,20 @@ for i in range(0,len(I_app_values)):
 
 """ Integrate the model at different values of I_app 
     to find maximum and minimum values of the limit cycle """
-g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 1000
-y0 = [-25.0,0.0]
+g = [g1,g2]
+t0 = 0.0
+y0 = [v0,w0]
 
 max_v = []; min_v = []; freq = []
 for j in range(0,len(I_app_values)):
-    print("Calculating:",round(j*100/len(I_app_values),1),"%")
+    #print("Calculating:",round(j*100/len(I_app_values),1),"%")
     I_app = I_app_values[j]
     time, sol = RK4_system(g, dt, y0, t0, Nstep)
     if I_app > stable[-1][0]:
         max_v.append([I_app,max(sol[0])])
         min_v.append([I_app,min(sol[0])])
-print('Done: 100.0 %')
-                
+#print('Done: 100.0 %')
+            
 # %%            
  
 """ Reorganize data """
@@ -145,5 +190,6 @@ plt.text(90,-65,'$V_{min}$'); plt.text(90,20,'$V_{max}$')
 plt.ylim(-90.,40.)
 plt.xlabel('$I_{app}$',fontsize=18); plt.ylabel('V',fontsize=18)
 plt.grid(linestyle=':')
+plt.show()
 
 # %%

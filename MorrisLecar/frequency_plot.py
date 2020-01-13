@@ -7,7 +7,43 @@
 # 
 # =============================================================================
 
-from morris_setup import *
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--v_ca")
+parser.add_argument("--dt")
+parser.add_argument("--Nstep")
+parser.add_argument("--v0")
+parser.add_argument("--w0")
+
+parser.add_argument("--Imin")
+parser.add_argument("--Imax")
+parser.add_argument("--v0min")
+parser.add_argument("--v0max")
+
+config = {}
+opts = parser.parse_args()
+
+if opts.v_ca:
+    v_ca = float(opts.v_ca)
+if opts.dt:
+    dt = float(opts.dt)
+if opts.Nstep:
+    Nstep = int(opts.Nstep)
+if opts.v0:
+    v0 = float(opts.v0)
+if opts.w0:
+    w0 = float(opts.w0)
+
+if opts.Imin:
+    Imin = float(opts.Imin)
+if opts.Imax:
+    Imax = float(opts.Imax)
+
+# %%
+
+from fixed_parameters import *
 
 """ Model for the Runge Kutta Integration 
 Here we need to insert the temporal dependency """
@@ -29,17 +65,18 @@ def tau_w(v):
 # %%
 
 """ Set I_app values and v0_values to draw bifurcation diagram """
-I_app_values = np.linspace(0,100,101)    
+I_app_values = np.linspace(Imin,Imax,2*(Imax-Imin)+1)    
 
 """ Integrate the model at different values of I_app 
     to find the frequency of the generated action potential """
-g = [g1,g2]; dt = 0.01; t0 = 0.0; Nstep = 5000
-y0 = [-25.0,0.0]
+g = [g1,g2]
+t0 = 0.0
+y0 = [v0,w0]
 
 max_v = []; min_v = []; freq = []
 for j in range(0,len(I_app_values)):
     I_app = I_app_values[j]
-    print("Calculating:",round(j*100/len(I_app_values),1),"%")
+    #print("Calculating:",round(j*100/len(I_app_values),1),"%")
     time, sol = RK4_system(g, dt, y0, t0, Nstep)
     peaks, _ = find_peaks(sol[0], height=0)
     peaks = peaks*dt/1000
@@ -47,7 +84,7 @@ for j in range(0,len(I_app_values)):
     for i in range(1,len(peaks)):
         period.append(peaks[i]-peaks[i-1])
     freq.append(1/np.mean(period))
-print("Done: 100.0 %")
+#print("Done: 100.0 %")
 
 # %%
 
@@ -57,5 +94,6 @@ plt.xlim(0,100); plt.ylim(0,160)
 plt.xlabel('$I_{app}$', fontsize=18)
 plt.ylabel('Frequency [Hz]', fontsize=18)
 plt.grid(linestyle=':')
+plt.show()
 
 # %%

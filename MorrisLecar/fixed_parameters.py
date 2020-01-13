@@ -18,7 +18,4 @@ phi_w = 0.15
 c = 2.
 v_k = -10.; theta_ca = 18.0; theta_k = 13.
 
-''' Analysis is performed in the (I_app,v_ca) plane '''
-v_ca  = 0.0  
-
 # %%
