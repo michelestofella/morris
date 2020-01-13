@@ -1,43 +1,17 @@
 # MORRIS-LECAR MODEL 
 
-Analysis of bifurcations in the Morris Lecar model for the classification of neurons' excitability.
+The goal of the repository is to perform the bifurcation analysis of the Morris Lecar model in order to discriminate neurons' excitability. 
 
-Project for 'Models and Numerical Methods in Physics'.
+The Morris Lecar model here used is described in the main paper (file `paper.pdf`) and the fixed parameters are defined in the file `MorrisLecar/fixed_parameters.py`. They are set as written in the main paper and can be modified to study different systems. Bifurcation analysis is performed by varying parameters `I_app` and `v_ca` that are not defined in `fixed_parameters.py` since they have to be parsed to the scripts. 
 
-Language: **python**.
+In order to properly perform bifurcation analysis, the Newton algorithm to find the zeros of a function is needed and so is an algorithm that integrates differential equations: in this case, the 4th order Runge Kutta algortihm was implemented. 
+The repository can be thus divided into three parts:
+1) Implementation of the Newton algorithm (folder `newton`)
+2) Implementation of the Runge Kutta algorithm (folder `RungeKutta`)
+3) Bifurcation analysis (folder `MorrisLecar`)
 
-IDE: **spyder**
+Both the Newton and the Runge Kutta algorithms have been tested via the libraries `pytest` and `hypothesis` and the tests are contained in the folder of the algorithm. Further description on the scripts and on the tests can be found in the folders `RungeKutta` for what concerns the Runge Kutta algorithm and `newton` for the Newton algorithm.
 
-## Structure of the repository
+To reproduce figures like the ones in the main paper (here in folder `Images`), have a look at the folder `example` that shows how to obtain such figures under a particular configuration. 
 
-* **Images** contains the images of the article. 
-* **MorrisLecar** contains the scripts for the final analysis of the Morris Lecar model.
-* **RungeKutta** contains the implementation and the tests of the 4th order Runge Kutta algorithm.
-* **newton** contains the implementation and the tests of the Newton algorithm.
-* **README.md** contains a description of the whole repository.
-* **paper.pdf** contains the final paper in pdf format.
-
-**Note**: every folder where some scripts have been implemented contains a *README* file with detailed documentation.
-
-### MorrisLecar
-
-* **morris.py** contains the numerical integration of the Morris Lecar model.
-* **morris2.py** contains the script to perform bifurcation analysis.
-* **morris3.py** contains the script to built the frequency plot
-* **morris_setup.py** contains the parameters of the model
-
-### RungeKutta
-
-* **rk4.py** contains the Runge-Kutta algorithm to solve one differential equation.
-* **rk4_test.py** contains the test of the Runge-Kutta algorithm implemented in rk4.py.
-* **error_rk4.py** contains the analysis of the global truncation error introduced by the algorithm.
-* **rk4_system.py** contains the Runge-Kutta algorithm to solve a set of two differential equations.
-* **rk4_system_test.py** contains the test of the Runge-Kutta algorithm implemented in rk4_system.py.
-
-
-### newton 
-* **newton.py** contains the one-dimensionale Newton algorithm.
-* **newton_test.py** contains the tests of the Newton algorithm implemented in newton.py
-* **newton2.py** contains the two-dimensional Newton algorithm. 
-* **newton2_test.py** contains the tests of the Newton algorithm implemented in newton2.py
-
+All the scripts are written in **python**.
