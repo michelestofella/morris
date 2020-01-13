@@ -1,4 +1,4 @@
-# MORRIS-LECAR MODEL 
+# Bifurcation Analysis of Morris Lecar Model
 
 The goal of the repository is to perform the bifurcation analysis of the Morris Lecar model in order to discriminate neurons' excitability. 
 
