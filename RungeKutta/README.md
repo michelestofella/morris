@@ -1,37 +1,12 @@
 # RungeKutta
 
-## rk4.py
+The present folder contains the implementation of the 4th order runge kutta algorithm to solve a system of n differential equations. The algorithm is contained in the file rk4_system.py.
 
-The file **rk4.py** contains the 4th order Runge Kutta algorithm to solve one dimensional differential equation written in the form
+The algorithm has been tested with several tests (see below) and the libraries pytest and hypothesis were used to develop testing strategies. 
 
-`dy/dt = f(t,y)`
+A property of the algorithm, namely the proportionality of the global truncation error with respect to the 4th power of the integration time step, is implemented in the folder `error_analysis`.
 
-For a description of the algorithm see  [wikipedia](https://en.wikipedia.org/wiki/Runge–Kutta_methods) or [rosettacode](https://rosettacode.org/wiki/Runge-Kutta_method).
-
-To call the function, use the following command:
-
-`t, y = RK4(f, dt, y0, t0, Nstep)`
-
-As input parameters, the function needs:
-* f: the function f(t,y) in the left side of the differential equation. **Attention**: the function must be defined with variable t as first input parameter;
-* dt: the integration step;
-* y0: initial condition of the y variable;
-* t0: initial condition on time variable;
-* Nstep: number of iterations that must be performed;
-
-As output the function returns:
-* t: an Nstep-dimensional vector containing the time istants at which the solution has been calculated; the difference between two adjacent elements of this vector is dt; 
-* y: an Nstep-dimensional vector containing the solution of the differential equation.
-
-### rk4_test.py
-
-The file **rk4_test.py** contains the tests of the 4th order Runge Kutta algorithm implemented in **rk4.py**. To perform the test, you should go to the folder RungeKutta and digit the following command line in the iPython console:
-
-`!pytest rk4_test.py`
-
-We here give a description of each test. The file contains only one test. Further testing of the algorithm is available in the **rk4_error.py** file where error analysis is performed. 
-
-* `test_one` applies the algorithm to the differential equation `dy/dt=0` and checks if the last element of the returned solution is equal to the initial value: `assert y[-1]==y0`
+A brief description of the scripts of the present folder is given below.
 
 ## rk4_system.py
 
@@ -60,21 +35,21 @@ As output, the function returns:
 
 ### rk4_system_test.py
 
-The file **rk4_system_test.py** contains the tests of the 4th order Runge Kutta algorithm implemented in **rk4_system.py**. To perform the test, go to the folder RungeKutta and digit the following command line in the iPython console:
+The file **rk4_system_test.py** contains the tests of the 4th order Runge Kutta algorithm implemented in **rk4_system.py**. To perform the test, go to the folder RungeKutta and digit the following command line:
 
-`!pytest rk4_system_test.py`
+`pytest rk4_system_test.py`
 
 We give here a description of the tests performed.
 
-* `test_1` applies the algorithm to the differential equation `dy/dt=0` and checks if the last element of the solution is equal to the initial value: `assert y[0][-1]==y0[0]`.
-* `test_2` applies the algorithm to the differential equation `dy/dt=1` with initial condition `y0=0` and checks if the last element of the t array and the solution array is equal: `assert y[0][-1]==t[-1]`.
-* `test_3` applies the algorithm to the system of two differential equation `dy1/dt=0` and `dy2/dt=1` and checks if the last element of the solution of the first differential equation is equal to the initial value `y[0][-1]=y0[0]` and if the final value of the solution of the second differential equation is equal to the final value of the time array `y[1][-1]==t[-1]`.
-* `test_4` applies the algorithm to the system of two differential equations `dy1/dt=-y1` and `dy2/dt=-y2` and checks if the last element of the two solutions is equal: `assert y[0][-1]==y[1][-1]`.
-* `test_5` tests the reversibility of the algorithm in the linear case `dy/dt=-2`. The algortihm is applied forward for `Nstep=1000`; then the last value is set as initial condition for the backward algortihm (i.e. the algorithm applied with inverse time step `dt=-dt`). The test checks if the last value is equal to the initial condition. 
-
+* `test_monodimensional_constant_case` integrates the simple differential equation `dy/dt=0` that has a constant value depending on the initial condition as solution. The test checks that the solution is constant. The strategy here applied is to see if this is true considering several initial conditions. Even the total number of steps is changed within the testing strategy. 
+* `test_monodimensional_linear_case` integrates the simple differential equation `dy/dt=constant` that has as solution a line. The test checks if the solution is the expected line considering different initial guesses and different different total number of steps. 
+* `test_bidimensional_independent_case` checks if the correct solution is reached while considering a bidimensional system formed by two differential equations, the first depending only on variable x, the second only on variable y. The strategy is to vary the initial conditions on both x and y and the total number of steps to be performed. 
+* `test_bidimensional_dependent_case` integrates a simple system of two differential equations and checks that the correct solution is reached, varying the total number of steps and the initial conditions on both variables. 
+* `test_reversibility` checks the reversibility of the algorithm in a linear monodimensional case. The algorithm is applied to go from time `0` to time `Nstep*dt`; then the time step is set as negative `-dt` and the algorithm is applied backward. The test checks if the initial value of the forward algorithm and the final value of the backward algorithm are equal. 
 
 ## rk4_error.py
 
+This file is contained in the folder `error_analysis`.
 To verify the correct implementation of the algorithm in **rk4.py**, we analyze the global truncation error for a simple model, namely the *passive membrane model* (see Ingalls (2013), *Mathamatical Modeling in Systems Biology. An Introduction*, MIT Press),
 
 `dy/dt = g/C*(E-y)`
