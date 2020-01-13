@@ -49,7 +49,8 @@ def RK4_system(f, dt, y0, t0, Nstep):
     """
 
     Neq = len(f)
-    t = np.zeros(Nstep+1); t[0] = t0
+    t = np.zeros(Nstep+1)
+    t[0] = t0
     y = np.zeros([Neq, Nstep+1]) 
     dy1 = np.zeros([Neq, Nstep+1]); dy2 = np.zeros([Neq, Nstep+1]); 
     dy3 = np.zeros([Neq, Nstep+1]); dy4 = np.zeros([Neq, Nstep+1])
