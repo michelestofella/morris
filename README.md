@@ -6,12 +6,12 @@ In order to properly perform bifurcation analysis, the Newton algorithm to find 
 The repository can be thus divided into three parts:
 1) Implementation of the Newton algorithm (folder `newton`)
 2) Implementation of the Runge Kutta algorithm (folder `RungeKutta`)
-3) Bifurcation analysis (folder `MorrisLecar`)
+3) Automated bifurcation analysis (folder `MorrisLecar`)
 
 Both the Newton and the Runge Kutta algorithms have been tested via the libraries `pytest` and `hypothesis` and the tests are contained in the folder of the algorithm. Further description on the scripts and on the tests can be found in the folders `RungeKutta` for what concerns the Runge Kutta algorithm and `newton` for the Newton algorithm.
 
 The Morris Lecar model here used is described in the main paper (file `paper.pdf`) and the fixed parameters are defined in the file `MorrisLecar/fixed_parameters.py`. They are set as written in the main paper and can be modified to study different systems. Bifurcation analysis is performed by varying parameters `I_app` and `v_ca` that are not defined in `fixed_parameters.py` since they have to be parsed to the scripts. 
 
-To reproduce figures like the ones in the main paper (here in folder `Images`), have a look at the folder `example` that shows how to obtain such figures under a particular configuration. 
+The folder `example` shows how to properly run the automated scripts to perform bifurcation analysis. 
 
 All the scripts are written in **python**.
