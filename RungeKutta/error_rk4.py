@@ -14,6 +14,7 @@
 import numpy as np
 import matplotlib.pyplot as plt    
 from rk4 import RK4
+from rk4_system import RK4_system
 
 # %% 
 
@@ -29,9 +30,9 @@ g = 0.0144; C = 0.98; E = -93.6;
 """ Integration parameters """
 dt = 0.1; v0 = -60.0; t0 = 0.0; Nstep = 5000
 
-time, voltage = RK4(single_ion, dt, y0=v0, t0=t0, Nstep=Nstep) 
+time, voltage = RK4_system([single_ion], dt, [v0], t0=t0, Nstep=Nstep) 
     
-plt.plot(time, voltage, label='Numerical', c='black')
+plt.plot(time, voltage[0], label='Numerical', c='black')
 plt.plot(time, solution(time), 'r--', label='Analitical')  
 plt.xlabel('Time [ms]', fontsize=15)
 plt.ylabel(' Membrane Voltage [mV]', fontsize=15) 
@@ -50,9 +51,9 @@ error = np.zeros(len(time_steps))
 
 """ We calculate the global truncation error for each time step """
 for i in range(0, len(time_steps)):
-    time, voltage = RK4(single_ion, dt=time_steps[i],
-                        y0=v0, t0=t0, Nstep=Nsteps[i])
-    error[i] = np.abs(solution(time[-1])-voltage[-1])  
+    time, voltage = RK4_system([single_ion], dt=time_steps[i],
+                        y0=[v0], t0=t0, Nstep=Nsteps[i])
+    error[i] = np.abs(solution(time[-1])-voltage[0][-1])  
 
 """ Linear Fit of Error vs dt^4 """
 dt4 = np.power(time_steps, 4)    
