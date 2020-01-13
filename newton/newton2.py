@@ -5,6 +5,7 @@
 # Approximate solution of the equation system f1(x1,x2)=0, f2(x1,x2)=0
 #
 # source: http://mathfaculty.fullerton.edu/mathews/n2003/FixPointNewtonMod.html
+#
 # =============================================================================
 
 import numpy as np
@@ -41,15 +42,16 @@ def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
     >>>     return [[-4+4*x, -6*y**2],
     >>>             [4*x**3, 4+16*y**3]]
     >>> newton2(f=f,Jf=Jf,p0=p0)
-    Number of iterations: 3
     array([0.06177013, 0.72449052])
     """
     for k in range(0,max_iter):
         f_k = f(p0[0],p0[1])
         Jf_k = Jf(p0[0],p0[1])
         if det(Jf_k) == 0:
-            print('Singular matrix, determinant = 0')
-            return False
+            if k == 0:
+                pk = p0
+            raise Exception('Singular matrix, determinant = 0\n pk = {}'.format(pk))
+            return pk
 
         invJf_k = inv(Jf_k)
         pk = p0 - np.dot(invJf_k,f_k)
@@ -59,7 +61,7 @@ def newton2(f,Jf,p0,eps=1e-8,max_iter=20):
             # print('Number of iterations: ',k)
             return pk
         p0 = pk
-    print('Maximum number of iterations reached: ',max_iter)
-    return False
+    raise Exception('Maximum number of iterations reached\n pk = {}'.format(pk))
+    return pk
     
 # %%
