@@ -13,7 +13,6 @@
 
 import numpy as np
 import matplotlib.pyplot as plt    
-from rk4 import RK4
 from rk4_system import RK4_system
 
 # %% 
