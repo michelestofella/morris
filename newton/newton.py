@@ -44,6 +44,6 @@ def newton(f, Df, x0, eps=1e-16, max_n=50):
             return None
         xn = xn - f_xn/Df_xn
     print('Maximum number of iterations reached')
-    return None
+    return xn
  
 # %%
