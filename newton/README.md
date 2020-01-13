@@ -1,5 +1,11 @@
 # Newton
 
+The present folder contains two scripts implementing the monodimensional (newton.py) and bidimensional (newton2.py) newton algorithm to find the zeros of a function (or a system of functions). 
+
+Both the algorithm have been tested in the files newton_test.py (monodimensional) and newton2_test.py (bidimensional); the libraries pytest and hypothesis were used in order to develop testing strategies. 
+
+A brief content of each file contained in the folder is given below. 
+
 ## newton.py
 
 The file **newton.py** contains the implementation of the Newton algorithm to find the zero of a one-dimensional function. Thus the algorithm solves the equation `f(x)=0`.
