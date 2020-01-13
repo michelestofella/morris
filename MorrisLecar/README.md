@@ -1,6 +1,6 @@
 # MorrisLecar
 
-This folder contains the scripts used to integrate the Morris Lecar model. For a description of the model, see [wikipedia](https://en.wikipedia.org/wiki/Morris–Lecar_model). For an accurate derivation of the model, see Ingalls (2013), *Mathematical Modeling in Systems Biology. An Introduction*, MIT Press. 
+This folder contains the automated scripts used to integrate the Morris Lecar model, to perform bifurcation analysis and to draw the frequency plot. For a description of the model, see [wikipedia](https://en.wikipedia.org/wiki/Morris–Lecar_model). For an accurate derivation of the model, see Ingalls (2013), *Mathematical Modeling in Systems Biology. An Introduction*, MIT Press. 
 
 ## fixed_parameters.py
 
