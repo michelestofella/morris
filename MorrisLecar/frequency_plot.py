@@ -21,6 +21,7 @@ parser.add_argument("--Imin")
 parser.add_argument("--Imax")
 parser.add_argument("--v0min")
 parser.add_argument("--v0max")
+parser.add_argument("--out")
 
 config = {}
 opts = parser.parse_args()
@@ -40,6 +41,9 @@ if opts.Imin:
     Imin = float(opts.Imin)
 if opts.Imax:
     Imax = float(opts.Imax)
+    
+if opts.out:
+    out = opts.out
 
 # %%
 
@@ -94,6 +98,6 @@ plt.xlim(0,100); plt.ylim(0,160)
 plt.xlabel('$I_{app}$', fontsize=18)
 plt.ylabel('Frequency [Hz]', fontsize=18)
 plt.grid(linestyle=':')
-plt.show()
+plt.savefig(out+'.png')
 
 # %%

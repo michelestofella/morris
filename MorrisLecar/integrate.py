@@ -16,6 +16,7 @@ parser.add_argument("--dt")
 parser.add_argument("--Nstep")
 parser.add_argument("--v0")
 parser.add_argument("--w0")
+parser.add_argument("--out")
 
 config = {}
 opts = parser.parse_args()
@@ -32,6 +33,8 @@ if opts.v0:
     v0 = float(opts.v0)
 if opts.w0:
     w0 = float(opts.w0)
+if opts.out:
+    out = opts.out
 
 # %%
 
@@ -83,6 +86,6 @@ ax1.set_ylim([-0.1,0.4])
 ax2.plot(time, sol[0], 'b')
 ax2.set_xlabel('Time', fontsize=18); ax2.set_ylabel('Voltage',fontsize=18)
 ax1.grid(linestyle=':'); ax2.grid(linestyle=':')
-plt.show()
+plt.savefig(out+'.png')
 
 # %%

@@ -20,6 +20,7 @@ parser.add_argument("--Imin")
 parser.add_argument("--Imax")
 parser.add_argument("--v0min")
 parser.add_argument("--v0max")
+parser.add_argument("--out")
 
 config = {}
 opts = parser.parse_args()
@@ -43,6 +44,9 @@ if opts.v0min:
     v0min = float(opts.v0min)
 if opts.v0max:
     v0max = float(opts.v0max)
+    
+if opts.out:
+    out = opts.out
 
 # %%
 
@@ -190,6 +194,6 @@ plt.text(90,-65,'$V_{min}$'); plt.text(90,20,'$V_{max}$')
 plt.ylim(-90.,40.)
 plt.xlabel('$I_{app}$',fontsize=18); plt.ylabel('V',fontsize=18)
 plt.grid(linestyle=':')
-plt.show()
+plt.savefig(out+'.png')
 
 # %%
