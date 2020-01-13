@@ -6,11 +6,11 @@ The file **newton.py** contains the implementation of the Newton algorithm to fi
 
 For a description of the algorithm, see [wikipedia](https://en.wikipedia.org/wiki/Newton%27s_method). 
 
-The algorithm here implemented does not require the number of iterations to be performed, because it stops when the function calculated at the n-th iteration is closer to zero than the precision parameter `eps` (set by default at `eps=1E-16`, i.e. machine precision). 
+The algorithm here implemented does not require the number of iterations to be performed, because it stops when the function calculated at the n-th iteration is closer to zero than the precision parameter `eps` (set by default at `eps=1E-14`, i.e. machine precision). 
 
 To call the algorithm, use the following line:
 
-`xn = newton(f, Df, x0, eps=1e-16, max_n=50)`
+`xn = newton(f, Df, x0, eps=1e-14, max_n=100)`
 
 As input parameters, the algortihm needs:
 * f: the function of which the zero should be calculated;
@@ -22,23 +22,21 @@ As input parameters, the algortihm needs:
 As output, the function return:
 * xn: the zero of the function
 
-Notice that an error arises if the derivative is zero in the initial guess point or in the iterated values. In this case, the function should print `Zero derivative` and return no value. 
-
-If instead the number of iterations exceeds the number of maximum iterations `max_n`, then the function prints `Maximum number of iterations reached` and returns no value.
-It is known from literature that the Newton algorithm has quadratic convergence: this means that the algorithm should find the zero at machine precision in 8/9 steps. 
-Thus, if this error arises, be careful you implemented correctly the function and you have chosen an appropriate initial guess. 
+An error (Exception) may arise if one of the following conditions is reached:
+* the derivative is zero 
+* the maximum number of iterations is reached
 
 ### newton_test.py
 
-The file **newton_test.py** contains the tests of the one-dimensional Newton algorithm implemented in **newton.py**. To perform the tests, go to the newton folder and digit the following command line in the iPython console:
+The file **newton_test.py** contains the tests of the one-dimensional Newton algorithm implemented in **newton.py**. To perform the tests, go to the newton folder and digit the following command line:
 
-`!pytest newton_test.py`
+`pytest newton_test.py`
 
 We here give a description of the tests performed.
 
-* `test_one` applies the algorithm to the function `f(x)=x**2-4` with initial guesses `x0=3.0` and `x0=-1.5`; the test checks if the algorithm correctly finds as solution the zeros `x=2.0` and `x=-2.0`.
-* `test_two` applies the algorithm to the function `f(x)=rx-x**2` for `r=3` and checks if the algorithm correctly finds, starting from `x0=2.0`, the zero `x=3`.
-* `test_three` applies the algorithm to the function `f(x)=sin(x)` and checks if the algortihm, starting from initial guess `x0=0.5`, finds the zero `x=0`.
+* `test_parabola_without_constant_terms` applies the algorithm to the function `f(x)=x**2` and checks if the algorithm correctly finds as solution the zeros `x=0`. The strategy here used is to run the test using different initial conditions.
+* `test_parabola_with_constant_terms` applies the algorithm to the function `f(x)=x**2-r` and checks if the algorithm correctly finds the zeros `x=sqrt(r)` or `x=-sqrt(r)`, according to the initial guess. The strategy here implemented is to run the algorithm using different values of the initial guess: since the function is symmetric, the algorithm will find the positive zero when the initial guess is positive and viceversa. Furthermore, the test is applied using different values of the parameter r that describes the function.
+* `test_exception` tests if the algorithm raises an error when considering a function with no zeros. 
 
 ## newton2.py
 
@@ -63,21 +61,19 @@ The input parameters needed for the function are:
 As output, the function returns:
 * pk: a two dimensional list containing the solution of the system.
 
-Notice that if the maximum number of iterations is reached, the function prints `Maximum number of iterations reached`.
-
-If the Jacobian matrix is singular in the initial guess point or in some iterated values, the function prints `Singular matrix: determinant 0`.
-
-If one of the previous errors arise (maximum number of interations reached or singular matrix), then the output of the algorithm is a False boolean variable.
+An error (Exception) arises if one of the following conditions is reached:
+* the determinant of the jacobian is zero
+* the maximum number of iterations has been reached
 
 ### newton2_test.py
 
-The file **newton2_test.py** contains the tests of the bidimensional Newton algorithm implemented in **newton2.py**. To perform the test, go to the newton folder and digit the following instruction in the iPython console:
+The file **newton2_test.py** contains the tests of the bidimensional Newton algorithm implemented in **newton2.py**. To perform the test, go to the newton folder and digit the following instruction:
 
-`!pytest newton2_test.py`
+`pytest newton2_test.py`
 
 We give here a description of the tests performed.
 
-* `test_one` applies the algorithm to the set of functions `f1(x,y)=1-4*x+2*x**2-2*y**3` and `f2(x,y)=-4+x**4+4*y+4*y**4` for which an analitical solution is known: with 6 decimals: `(0.06177,0.724491)`. The test checks if the algorithm finds the analitical solution (within 6 decimals).
-* `test_two` applies the algorithm to the system composed by `f1(x,y)=x` and `f2(x,y)=y` and checks if the algorithm finds `(0,0)` as solution.
-* `test_three` applies the algorithm to the system composed by `f1(x,y)=f2(x,y)=0` that should return a singular matrix. The test checks if the algorithm returns a `False` boolean value as it should do. 
-* `test_four` applies the algorithm to the system `f1(x,y)=x**2+y**2+1` and `f2(x,y)=2*x` that should have no zeros, thus the algorithm should reach the maximum number of iterations. The test checks if the function returns a `False` boolean variable as it should do in this case.
+* `test_unique_solution` considers a system where a unique solution exists, namely `f1(x,y)=x` and `f2(x,y)=y`, and checks if the correct solution is returned by the algorithm. The strategy here applied is to use different initial conditions.
+* `test_two_possible_solution` considers a system where two zeros exist, namely `f1(x,y)=x-y` and `f2(x,y)=y**2-r`, and checks that both can be reached starting from a proper starting guess. The strategy is to use different initial conditions in order to reach both zeros. The parameter r that defines function f2 is also changed.
+* `test_zero_determinant_exception` tests if the algorithm raises an exception when the determinant of the jacobian matrix is zero. The algorithm is applied to a particular set of function where each function is a constant that is varied within the testing strategy. 
+* `test_max_iterations_exception` tests if the algorithm raises an exception when considering a system of function that has no solutions. 
