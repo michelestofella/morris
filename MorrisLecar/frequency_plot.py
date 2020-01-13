@@ -5,6 +5,17 @@
 # Frequency of the output signal is calculated
 # Frequency plot is generated
 # 
+# Several parameters must be parsed in order to run the algorithm:
+#   --v_ca  the parameter of the morris lecar model that discriminates
+#           different classes of neurons.
+#   --dt    integration time step
+#   --Nstep number of integration steps to be performed
+#   --v0    initial condition on the voltage
+#   --w0    initial condition of the fraction of opened channels
+#   --Imin  minimum value of applied current analysed
+#   --Imax  maximum value of applied current analysed 
+#   --out   name of the generated figure
+#
 # =============================================================================
 
 import argparse
@@ -19,8 +30,6 @@ parser.add_argument("--w0")
 
 parser.add_argument("--Imin")
 parser.add_argument("--Imax")
-parser.add_argument("--v0min")
-parser.add_argument("--v0max")
 parser.add_argument("--out")
 
 config = {}
@@ -80,7 +89,7 @@ y0 = [v0,w0]
 max_v = []; min_v = []; freq = []
 for j in range(0,len(I_app_values)):
     I_app = I_app_values[j]
-    #print("Calculating:",round(j*100/len(I_app_values),1),"%")
+    print("Calculating:",round(j*100/len(I_app_values),1),"%")
     time, sol = RK4_system(g, dt, y0, t0, Nstep)
     peaks, _ = find_peaks(sol[0], height=0)
     peaks = peaks*dt/1000
@@ -88,11 +97,12 @@ for j in range(0,len(I_app_values)):
     for i in range(1,len(peaks)):
         period.append(peaks[i]-peaks[i-1])
     freq.append(1/np.mean(period))
-#print("Done: 100.0 %")
+print("Done: 100.0 %")
 
 # %%
 
 """ Plot of frequencies vs I_app """
+plt.figure(figsize=(15,10))
 plt.plot(I_app_values,freq)
 plt.xlim(0,100); plt.ylim(0,160)
 plt.xlabel('$I_{app}$', fontsize=18)

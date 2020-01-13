@@ -4,6 +4,16 @@
 # Runge Kutta algorithm is applied 
 # Plots of the signal and the phase space are generated
 #
+# Several parameters must be parsed in order to run the algorithm:
+#   --v_ca  the parameter of the morris lecar model that discriminates
+#           different classes of neurons.
+#   --I_app the external current applied to the model 
+#   --dt    integration time step
+#   --Nstep number of integration steps to be performed
+#   --v0    initial condition on the voltage
+#   --w0    initial condition of the fraction of opened channels
+#   --out   name of the generated figure
+#
 # =============================================================================
 
 import argparse
