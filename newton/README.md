@@ -16,7 +16,7 @@ The algorithm here implemented does not require the number of iterations to be p
 
 To call the algorithm, use the following line:
 
-`xn = newton(f, Df, x0, eps=1e-14, max_n=100)`
+`res = newton(f, Df, x0, eps=1e-14, max_n=100)`
 
 As input parameters, the algortihm needs:
 * `f`: the function of which the zero should be calculated;
@@ -26,9 +26,9 @@ As input parameters, the algortihm needs:
 * `max_n`: maximum iterations to be performed (default value `max_n=100`).
 
 As output, the function return:
-* `xn`: the zero of the function
+* `res`: a `Result` object containing three attributes: `res.x` is the value found at the last iteration (the zero of the function if the algorithm properly converged); `res.success` is a boolean flag indicating if the algorithm properly converged; `res.message` is a string containing information about the reason why the algorithm did not converge.
 
-An error (Exception) arises if one of the following conditions is reached:
+The algorithm does not converge and thus `res.success` is `False` if one of the following conditions is reached:
 * the derivative is zero 
 * the maximum number of iterations is reached
 
@@ -42,7 +42,7 @@ We here give a description of the tests performed.
 
 * `test_parabola_without_constant_terms` applies the algorithm to the function `f(x)=x**2` and checks if the algorithm correctly finds as solution the zero `x=0`. The strategy here used is to run the test using different initial conditions.
 * `test_parabola_with_constant_terms` applies the algorithm to the function `f(x)=x**2-r` and checks if the algorithm correctly finds the zeros `x=sqrt(r)` or `x=-sqrt(r)`, depending on the initial guess. The strategy here implemented is to run the algorithm using different values of the initial guess: since the function is symmetric, the algorithm will find the positive zero `x=sqrt(r)` when the initial guess is positive and viceversa. Furthermore, the test is applied using different values of the parameter r that describes the function.
-* `test_exception` tests if the algorithm raises an error when considering a function with no zeros. 
+* `test_exception` tests if the algorithm return a `False` boolean variable under the attribute `success` of the `Result` object given as output for a function with no zeros. 
 
 ## newton2.py
 
@@ -55,7 +55,7 @@ For a theoretical description of the two-dimensional Newton algortihm, see [math
 
 To call the algorithm, digit the following line:
 
-`pk = newton2(f,Jf,p0,eps=1e-8,max_iter=20)`
+`res = newton2(f,Jf,p0,eps=1e-8,max_iter=20)`
 
 The input parameters needed for the function are:
 * `f`: the list of two functions that form the system `f=[f1,f2]`;
@@ -65,9 +65,9 @@ The input parameters needed for the function are:
 * `max_iter`: maximum number of iterations to be performed (by default 6`max_iter=20`).
 
 As output, the function returns:
-* `pk`: a two dimensional list containing the solution of the system.
+* `res`: a `Result` object containing three attributes: `res.x` is a bidimensional array containing the value found at the last iteration (the zero of the function if the algorithm properly converged); `res.success` is a boolean flag indicating if the algorithm properly converged; `res.message` is a string containing information about the reason why the algorithm did not converge.
 
-An error (Exception) arises if one of the following conditions is reached:
+The algorithm does not converge and returns a `False` boolean variable under the attribute `res.success` if one of the following conditions is reached:
 * the determinant of the jacobian is zero
 * the maximum number of iterations has been reached
 
@@ -81,5 +81,5 @@ We give here a description of the tests performed.
 
 * `test_unique_solution` considers a system where a unique solution exists, namely `f1(x,y)=x` and `f2(x,y)=y`, and checks if the correct solution is returned by the algorithm. The strategy here applied is to use different initial conditions.
 * `test_two_possible_solution` considers a system where two zeros exist, namely `f1(x,y)=x-y` and `f2(x,y)=y**2-r`, and checks that both can be reached starting from a proper starting guess. The strategy is to use different initial conditions in order to reach both zeros. The parameter r that defines function f2 is also changed.
-* `test_zero_determinant_exception` tests if the algorithm raises an exception when the determinant of the jacobian matrix is zero. The algorithm is applied to a particular set of function where each function is a constant that is varied within the testing strategy. 
-* `test_max_iterations_exception` tests if the algorithm raises an exception when considering a system of function that has no solutions. 
+* `test_zero_determinant_exception` tests if the algorithm returns a `False` boolean variable for the attribute `res.success` when the determinant of the jacobian matrix is zero. The algorithm is applied to a particular set of function where each function is a constant that is varied within the testing strategy. 
+* `test_max_iterations_exception` tests if the algorithm returns a `False` boolean variable for the attribut `res.success` when considering a system of function that has no solutions. 
