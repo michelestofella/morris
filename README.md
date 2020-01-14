@@ -4,11 +4,11 @@ The goal of the repository is to perform the bifurcation analysis of the Morris 
 
 All the scripts are written in **python**.
 
-## Algorithms needed to perform bifurcation analysis
+## Bifurcation Analysis
 
-In dynamical systems, a bifurcation occurs when a small smooth change made to the parameter values (the bifurcation parameters) of a system causes a sudden “qualitative” or topological change in its behaviour. For detailed information about bifurcation theory, look at [wikipedia](https://en.wikipedia.org/wiki/Bifurcation_theory). 
+In dynamical systems, a bifurcation occurs when a small smooth change made to a parameter (the bifurcation parameter) of a system causes a sudden “qualitative” or topological change in its behaviour. For further information about bifurcation theory, look at [wikipedia](https://en.wikipedia.org/wiki/Bifurcation_theory). 
 
-In order to properly perform bifurcation analysis, we need to implement the **Newton algorithm** to find the zeros of a function and an algorithm that integrates differential equations: in this case, the 4th order **Runge Kutta algortihm** was implemented. 
+In order to properly perform bifurcation analysis, we need an algorithm to find the zeros of a function and an algorithm that integrates differential equations: in this case the **Newton algorithm** the 4th order **Runge Kutta algorithm** are implemented from scratch. 
 The repository can be thus divided into three parts:
 1) Implementation of the Newton algorithm (folder `newton`)
 2) Implementation of the Runge Kutta algorithm (folder `RungeKutta`)
