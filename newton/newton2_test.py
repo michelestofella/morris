@@ -22,7 +22,7 @@ def test_unique_solution(x0,y0):
         return [[1,0],
                 [0,1]]
     p0 = [x0,y0]
-    xn, yn = newton2(f,Jf,p0)
+    xn, yn = newton2(f,Jf,p0).x
     assert round(xn,6) == 0
     assert round(yn,6) == 0
 
@@ -51,10 +51,9 @@ def test_two_possible_solutions(x0,y0,r):
     ''' if y0=0, the determinant of the jacobian is zero,
     thus an exception should be raised. '''
     if y0 == 0:
-        with pytest.raises(Exception):
-            assert newton2(f,Jf,p0) 
+        assert newton2(f,Jf,p0).success == False
     else:
-        xn, yn = newton2(f,Jf,p0)
+        xn, yn = newton2(f,Jf,p0).x
         assert round(xn,6) == round(yn,6)
         if y0 > 0:
             assert round(yn,6) == round(np.sqrt(r),6)
@@ -84,8 +83,7 @@ def test_zero_determinant_exception(x0,y0,
     def Jf(x,y):
         return [[0,0],
                 [0,0]]
-    with pytest.raises(Exception):
-        assert newton2(f,Jf,p0)
+    assert newton2(f,Jf,p0).success == False
     
 @given(st.floats(-10,10),st.floats(-10,10))
 def test_max_iterations_exception(x0,y0):
@@ -106,7 +104,6 @@ def test_max_iterations_exception(x0,y0):
         return [[2*x,2*y],
                 [2,0]]
     p0 = [x0,y0]
-    with pytest.raises(Exception):
-        assert newton2(f,Jf,p0)
+    assert newton2(f,Jf,p0).success == False
 
 # %%

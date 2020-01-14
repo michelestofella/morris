@@ -15,7 +15,7 @@ def test_parabola_without_constant_term(s):
         return x**2
     def Df(x):
         return 2*x
-    assert round(newton(f,Df,x0=s),5) == 0
+    assert round(newton(f,Df,x0=s).x,5) == 0
 
 @given(st.floats(-10,10),st.floats(1,16))
 def test_parabola_with_constant_term(s,r):
@@ -32,25 +32,24 @@ def test_parabola_with_constant_term(s,r):
         return 2*x
     x0 = s
     if x0 > 0:
-        assert round(newton(f,Df,x0),5) == round(np.sqrt(r),5)
+        assert round(newton(f,Df,x0).x,5) == round(np.sqrt(r),5)
     elif x0 < 0:
-        assert round(newton(f,Df,x0),5) == round(-np.sqrt(r),5)
+        assert round(newton(f,Df,x0).x,5) == round(-np.sqrt(r),5)
         
 @given(st.floats(-10,10),st.floats(1,16))
 def test_exception(s,r):
     '''
-    tests if the newton algorithm raises an exception if a function with no zeros
-    is given as input, for example the parabola f(x) = x^2 + r,
-    with r positive number. The initial guess is a float number s within the
-    interval [-10,10].
+    tests if the newton algorithm raises a false boolean variable success
+    if a function with no zeros is given as input, for example the parabola 
+    f(x) = x^2 + r, with r positive number. The initial guess is a float number s 
+    within the interval [-10,10].
     '''
     def f(x):
         return x**2 + r
     def Df(x):
         return 2*x
     x0 = s
-    with pytest.raises(Exception):
-        assert newton(f,Df,x0) 
+    assert newton(f,Df,x0).success == False 
     
 # %%
     
