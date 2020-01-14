@@ -108,6 +108,6 @@ plt.xlim(0,100); plt.ylim(0,160)
 plt.xlabel('$I_{app}$', fontsize=18)
 plt.ylabel('Frequency [Hz]', fontsize=18)
 plt.grid(linestyle=':')
-plt.savefig(out+'.png')
-
+#plt.savefig(out+'.png')
+plt.show()
 # %%

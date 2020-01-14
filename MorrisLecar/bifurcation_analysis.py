@@ -93,7 +93,6 @@ I_app_values = np.linspace(Imin,Imax,200)
 v0_values = np.linspace(v0min,v0max,61)
 w0 = 0.0
 
-count_warn = 0
 """ Find the zeros of the function """
 v_zeros = []; w_zeros = []
 for I_app in I_app_values:
@@ -102,8 +101,9 @@ for I_app in I_app_values:
     
     for v0 in v0_values:
         p0 = [v0,w0]
-        try:
-            point = newton2(f,Jf,p0)
+        res = newton2(f,Jf,p0)
+        if res.success == True:
+            point = res.x
             zero_v.append(round(point[0],5))
             zero_w.append(round(point[1],5))
             for element in zero_v:
@@ -113,9 +113,6 @@ for I_app in I_app_values:
                 if element not in zeros_w:
                     zeros_w.append(element)
 
-        except:
-            count_warn += 1
-    
     v_zeros.append(zeros_v); w_zeros.append(zeros_w)
 
 # %%
