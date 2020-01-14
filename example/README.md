@@ -21,14 +21,18 @@ and the phase space of the integration, type from the present directory
 We give here a brief description of the parameters that must be parsed to the script. 
 The first two parameters are part of the model and are the parameters over which
 bifurcation analysis will be performed:
-* --v_ca: the parameter of the morris lecar model that discriminated between classes of neurons
-* --I_app: the external current applied to the model
+* `--v_ca`: the parameter of the morris lecar model that discriminated between classes of neurons
+* `--I_app`: the external current applied to the model
 The other parameters are computational parameters:
-* --dt: time step of integration
-* --Nstep: total number of steps to be performed
-* --v0: initial condition on voltage
-* --w0: initial condition on the fraction of opened channels
-* --out: name of the generated figure
+* `--dt`: time step of integration
+* `--Nstep`: total number of steps to be performed
+* `--v0`: initial condition on voltage
+* `--w0`: initial condition on the fraction of opened channels
+* `--out`: name of the generated figure
+
+A figure `test_int.png` is created as output.
+
+![](test_int.png)
 
 ## Bifurcation Analysis
 
@@ -37,19 +41,24 @@ To perform bifurcation analysis of the model, type from the present directory
 `python ../MorrisLecar/bifurcation_analysis.py --v_ca 0.0 --Imin 0 --Imax 100 --v0min -80 --v0max 40 --out test_bif`
 
 We give here a brief description of the parameters to be parsed:
-* --v_ca: the parameter of the morris lecar model that discriminated between classes of neurons
-* --Imin: the minimum value of the applied current
-* --Imax: the maximum value of the applied current
-* --v0min: the minimum value of the initial condition on voltage
-* --v0max: the maximum value of the initial condition on voltage7
-* --out: name of the generated figure
+* `--v_ca`: the parameter of the morris lecar model that discriminated between classes of neurons
+* `--Imin`: the minimum value of the applied current
+* `--Imax`: the maximum value of the applied current
+* `--v0min`: the minimum value of the initial condition on voltage
+* `--v0max`: the maximum value of the initial condition on voltage7
+* `--out`: name of the generated figure
 
 Notice that when you run the previous script, several errors may be generated: this is due to 
-the fact that the newton algorithm may find an exception (the determinant of the jacobian is 
+the fact that the Newton algorithm may find an exception (the determinant of the jacobian is 
 zero or the maximum number of iterations has been reached). 
 Such errors are printed in order to be the user aware of the fact that for some values of 
 I_app and/or v0, the newton algorithm does not converge. 
-However, in the bifurcation analysis, such points are not shown. 
+However, in the bifurcation analysis, such points are not considered.
+Further information about this behaviout can be exploited in the folder `newton` that implements and tests the algorithm. 
+
+A figure `test_bif.png` is generated and saved as output.
+
+![](test_bif.png)
 
 ## Frequency Plot
 
@@ -58,19 +67,15 @@ In order to generate the frequency plot, type from the present directory
 `python ../MorrisLecar/frequency_ploy.py --v_ca 0.0 --dt 0.01 --Nstep 5000 --v0 -25.0 --w0 0.0 --Imin 0 --Imax 100 --out test_freq`
 
 We give here a brief description of the parameters:
-* --v_ca: the parameter of the morris lecar model that discriminated between classes of neurons
-* --dt: time step of integration
-* --Nstep: total number of steps to be performed
-* --v0: initial condition on voltage
-* --w0: initial condition on the fraction of opened channels
-* --Imin: the minimum value of the applied current
-* --Imax: the maximum value of the applied current
-* --out: name of the generated figure
+* `--v_ca`: the parameter of the morris lecar model that discriminated between classes of neurons
+* `--dt`: time step of integration
+* `--Nstep`: total number of steps to be performed
+* `--v0`: initial condition on voltage
+* `--w0`: initial condition on the fraction of opened channels
+* `--Imin`: the minimum value of the applied current
+* `--Imax`: the maximum value of the applied current
+* `--out`: name of the generated figure
 
-## Output
+A figure `test_freq.png` is generated as output. 
 
-Each script generates and saves a plot. In this folder we show the plots obtained running
-the scripts as previously shown. In particular,
-* test_int.png contains the results of the integration of the model
-* test_bif.png contains the outcomes of the bifurcation analysis
-* test_freq.png contains the frequency plot
+![](test_freq.png)
