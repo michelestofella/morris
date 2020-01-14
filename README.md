@@ -8,7 +8,7 @@ All the scripts are written in **python**.
 
 In dynamical systems, a bifurcation occurs when a small smooth change made to a parameter (the bifurcation parameter) of a system causes a sudden “qualitative” or topological change in its behaviour. For further information about bifurcation theory, look at [wikipedia](https://en.wikipedia.org/wiki/Bifurcation_theory). 
 
-In order to properly perform bifurcation analysis, we need an algorithm to find the zeros of a function and an algorithm that integrates differential equations: in this case the **Newton algorithm** the 4th order **Runge Kutta algorithm** are implemented from scratch. 
+In order to properly perform bifurcation analysis, we need an algorithm to find the zeros of a function and an algorithm that integrates differential equations: in this case the [Newton algorithm](https://en.wikipedia.org/wiki/Newton%27s_method) the 4th order [Runge Kutta algorithm](https://en.wikipedia.org/wiki/Runge–Kutta_methods) are implemented from scratch. 
 The repository can be thus divided into three parts:
 1) Implementation of the Newton algorithm (folder `newton`)
 2) Implementation of the Runge Kutta algorithm (folder `RungeKutta`)
@@ -18,7 +18,7 @@ Both the Newton and the Runge Kutta algorithms have been tested via the librarie
 
 ## Morris Lecar Model
 
-The Morris Lecar model here used is described in the main paper (file `paper.pdf`). It describes the time evolution of the voltage in a membrane domined by two ionic currents: an inward calcium current and an outward potassium current. Experimental studies show that calcium channels relax to steady state much more quickly than the potassium channels, thus the model can be described by two only variables, namely the voltage `V` and the fraction of opened potassium channels `w`.
+The [Morris Lecar model](https://en.wikipedia.org/wiki/Morris–Lecar_model) here used is described in the main paper (file `paper.pdf`). It describes the time evolution of the voltage in a membrane domined by two ionic currents: an inward calcium current and an outward potassium current. Experimental studies show that calcium channels relax to steady state much more quickly than the potassium channels, thus the model can be described by two only variables, namely the voltage `V` and the fraction of opened potassium channels `w`.
 
 Many parameters have to be defined. The parameters over which bifurcation analysis is performed:
 
