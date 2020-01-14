@@ -64,7 +64,7 @@ A figure `test_bif.png` is generated and saved as output.
 
 In order to generate the frequency plot, type from the present directory
 
-`python ../MorrisLecar/frequency_ploy.py --v_ca 0.0 --dt 0.01 --Nstep 5000 --v0 -25.0 --w0 0.0 --Imin 0 --Imax 100 --out test_freq`
+`python ../MorrisLecar/frequency_plot.py --v_ca 0.0 --dt 0.01 --Nstep 5000 --v0 -25.0 --w0 0.0 --Imin 0 --Imax 100 --out test_freq`
 
 We give here a brief description of the parameters:
 * `--v_ca`: the parameter of the morris lecar model that discriminated between classes of neurons
