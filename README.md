@@ -36,7 +36,7 @@ and some fixed parameters:
 * `v_k`,`theta_ca` and `theta_k` are other numerical parameters that together with `v_ca` determine the steady state of the calcium and potassium channels; default `v_k=-10`, `theta_ca=18` and `theta_k=13`
 * `phi_w` is a constant term introduced by [Liu](https://www.researchgate.net/publication/259770887_Bifurcation_analysis_of_a_Morris-Lecar_neuron_model); default: `phi_w=0.15`.
 
-All the fixed parameters are defined in the file `MorrisLecar/fixed_parameters.py`. They are set as written in the main paper and can be modified to study different systems. Bifurcation analysis is performed by varying two parameters, namely `I_app` and `v_ca`, that are not defined in `fixed_parameters.py` since they have to be parsed to the scripts. 
+All the fixed parameters are defined in the file `MorrisLecar/fixed_parameters.py` ([here](https://github.com/michelestofella/morris/blob/master/MorrisLecar/fixed_parameters.py)). They are set as written in the main paper and can be modified to study different systems. Bifurcation analysis is performed by varying two parameters, namely `I_app` and `v_ca`, that are not defined in `fixed_parameters.py` since they have to be parsed to the scripts. 
 
 ## Example
 
