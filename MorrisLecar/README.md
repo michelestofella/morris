@@ -17,10 +17,9 @@ The parameters over which bifurcation analysis is to be implemented, namely `v_c
 This file contains the integration of the Morris Lecar model through the Runge Kutta algorithm (imported by `morris\rungekutta\rk4_system.py`) and a visualization of the signal voltage in time and of the phase space is shown. 
 We give here a description of the script, following the block of code.
 
-To run the integration, digit `python integrate.py` followed by the following compulsory parameters:
-* `--v_ca`  the parameter of the morris lecar model that discriminates different classes of neurons.
-* `--I_app` the external current applied to the model 
-and by the following optional arguments:
+To run the integration, digit `python integrate.py` followed by the following parameters:
+* `--v_ca`  the parameter of the morris lecar model that discriminates different classes of neurons; default: `v_ca=0`
+* `--I_app` the external current applied to the model; default: `I_app=0` 
 * `--dt`    integration time step, default `dt=0.01`
 * `--Nstep` number of integration steps to be performed, default: `Nstep=10000`
 * `--v0`    initial condition on the voltage, default: `v0=0`
@@ -41,13 +40,12 @@ This file contains the bifurcation analysis of the model. In order to perform bi
 * For each zero found, we calculate the eigenvectors of the Jacobian matrix to establish if the zero the point is stable or unstable.
 * We change the value of `I_app`.
 
-To run the script, digit the command line from the present directory `python bifurcation_analysis.py` followed by the compulsory parameters:
-* `--v_ca`  the parameter of the morris lecar model that discriminates different classes of neurons.
-* `--Imin`  minimum value of applied current analysed
-* `--Imax`  maximum value of applied current analysed 
-* `--v0min` minimum value of initial condition on voltage
-* `--v0max` maximum value of initial condition on voltage
-and by the optional argument:
+To run the script, digit the command line from the present directory `python bifurcation_analysis.py` followed by the parameters:
+* `--v_ca`  the parameter of the morris lecar model that discriminates different classes of neurons; default: `v_ca=0`
+* `--Imin`  minimum value of applied current analysed; default: `Imin=0`
+* `--Imax`  maximum value of applied current analysed; default: `Imax=100` 
+* `--v0min` minimum value of initial condition on voltage; default: `v0min=-50`
+* `--v0max` maximum value of initial condition on voltage; default: `v0max=50`
 * `--out`   name of the generated figure; if this parameter is not inserted, the plot is shown but not saved
 
 We describe here the script following the blocks of code. After parsing the parameters from the command line, the model parameters are imported from `fixed_parameters.py`, together with the bidimensional Newton algorithm (imported from `morris\newton\newton2.py`) and the Runge Kutta algorithm (imported from `morris\rungekutta\rk4_system.py`).
@@ -73,11 +71,10 @@ Even if such exceptions are shown to let the user be aware of the problem, the p
 This file contains the script to reproduce the frequency plot. 
 To calculate the frequency of the generated output signal, we use the Scipy function `find_peaks`.
 
-To run the script, digit the command `python frequency_plot.py` followed by the compulsory parameters below:
-* `--v_ca`  the parameter of the morris lecar model that discriminates different classes of neurons
-* `--Imin`  minimum value of applied current analysed
-* `--Imax`  maximum value of applied current analysed 
-and by the optinal arguments:
+To run the script, digit the command `python frequency_plot.py` followed by the parameters below:
+* `--v_ca`  the parameter of the morris lecar model that discriminates different classes of neurons; default: `v_ca=0`
+* `--Imin`  minimum value of applied current analysed; default: `Imin=0`
+* `--Imax`  maximum value of applied current analysed; default: `Imax=100` 
 * `--dt`    integration time step; default: `dt=0.01`
 * `--Nstep` number of integration steps to be performed; default: `5000`
 * `--v0`    initial condition on the voltage; default: `v0=0`
