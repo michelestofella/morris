@@ -2,7 +2,9 @@
 
 The goal of the repository is to perform the bifurcation analysis of the Morris Lecar model in order to discriminate neurons' excitability. The results of the analysis are discussed in the file `paper.pdf`.
 
-All the scripts are written in **python** (version 3.7.3). Libraries needed: `argparse`, `hypothesis`, `matplotlib`, `numpy`, `pandas`, `pytest`, `scipy` and `sys`.
+All the scripts are written in **python** (version 3.7.3). 
+
+Libraries needed: `argparse` (version 1.1), `hypothesis` (version 4.36.2), `matplotlib` (version 3.0.3), `numpy` (version 1.16.2), `pandas` (version 0.24.2), `pytest` (version 4.3.1), `scipy` (version 1.2.1) and `sys`.
 
 ## Bifurcation Analysis
 
