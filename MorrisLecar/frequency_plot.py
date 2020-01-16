@@ -37,6 +37,8 @@ opts = parser.parse_args()
 
 if opts.v_ca:
     v_ca = float(opts.v_ca)
+else:
+    v_ca = 0
 if opts.dt:
     dt = float(opts.dt)
 else:
@@ -56,8 +58,12 @@ else:
 
 if opts.Imin:
     Imin = float(opts.Imin)
+else:
+    Imin = 0
 if opts.Imax:
     Imax = float(opts.Imax)
+else:
+    Imax = 100
     
 if opts.out:
     save = True

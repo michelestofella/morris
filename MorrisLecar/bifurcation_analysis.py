@@ -31,14 +31,24 @@ opts = parser.parse_args()
 
 if opts.v_ca:
     v_ca = float(opts.v_ca)
+else:
+    v_ca = 0
 if opts.Imin:
     Imin = float(opts.Imin)
+else:
+    Imin = 0
 if opts.Imax:
     Imax = float(opts.Imax)
+else:
+    Imax = 100
 if opts.v0min:
     v0min = float(opts.v0min)
+else:
+    v0min = -50
 if opts.v0max:
     v0max = float(opts.v0max)
+else: 
+    v0max = 50
     
 if opts.out:
     save = True

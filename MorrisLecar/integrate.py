@@ -33,8 +33,12 @@ opts = parser.parse_args()
 
 if opts.v_ca:
     v_ca = float(opts.v_ca)
+else:
+    v_ca = 0
 if opts.I_app:
     I_app = float(opts.I_app)
+else:
+    I_app = 0
 if opts.dt:
     dt = float(opts.dt)
 else:
