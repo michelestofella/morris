@@ -41,7 +41,10 @@ if opts.v0max:
     v0max = float(opts.v0max)
     
 if opts.out:
+    save = True
     out = opts.out
+else:
+    save = False
 
 # %%
 

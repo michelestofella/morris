@@ -37,14 +37,25 @@ if opts.I_app:
     I_app = float(opts.I_app)
 if opts.dt:
     dt = float(opts.dt)
+else:
+    dt = 0.01
 if opts.Nstep:
     Nstep = int(opts.Nstep)
+else:
+    Nstep = 10000
 if opts.v0:
     v0 = float(opts.v0)
+else:
+    v0 = 0
 if opts.w0:
     w0 = float(opts.w0)
+else:
+    w0 = 0
 if opts.out:
+    save = True
     out = opts.out
+else:
+    save = False
 
 # %%
 
@@ -96,6 +107,8 @@ ax1.set_ylim([-0.1,0.4])
 ax2.plot(time, sol[0], 'b')
 ax2.set_xlabel('Time', fontsize=18); ax2.set_ylabel('Voltage',fontsize=18)
 ax1.grid(linestyle=':'); ax2.grid(linestyle=':')
-plt.savefig(out+'.png')
+if save == True:
+    plt.savefig(out+'.png')
+plt.show()
 
 # %%

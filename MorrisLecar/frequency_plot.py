@@ -39,12 +39,20 @@ if opts.v_ca:
     v_ca = float(opts.v_ca)
 if opts.dt:
     dt = float(opts.dt)
+else:
+    dt = 0.01
 if opts.Nstep:
     Nstep = int(opts.Nstep)
+else:
+    Nstep = 5000
 if opts.v0:
     v0 = float(opts.v0)
+else:
+    v0 = 0
 if opts.w0:
     w0 = float(opts.w0)
+else:
+    w0 = 0
 
 if opts.Imin:
     Imin = float(opts.Imin)
@@ -52,7 +60,10 @@ if opts.Imax:
     Imax = float(opts.Imax)
     
 if opts.out:
+    save = True
     out = opts.out
+else:
+    save = False
 
 # %%
 
@@ -108,6 +119,8 @@ plt.xlim(0,100); plt.ylim(0,160)
 plt.xlabel('$I_{app}$', fontsize=18)
 plt.ylabel('Frequency [Hz]', fontsize=18)
 plt.grid(linestyle=':')
-#plt.savefig(out+'.png')
+if save == True:
+    plt.savefig(out+'.png')
 plt.show()
+
 # %%
