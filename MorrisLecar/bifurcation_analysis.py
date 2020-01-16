@@ -154,6 +154,8 @@ plt.ylim(v0min,v0max)
 plt.xlabel('$I_{app}$',fontsize=18)
 plt.ylabel('V',fontsize=18)
 plt.grid(linestyle=':')
-plt.savefig(out+'.png')
+if save == True:
+    plt.savefig(out+'.png')
+plt.show()
 
 # %%
